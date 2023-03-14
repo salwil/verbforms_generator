@@ -1,0 +1,7 @@
+.csv
+.idea/
+__pycache__/
+*.egg-info/
+.txt
+build
+.venv/
