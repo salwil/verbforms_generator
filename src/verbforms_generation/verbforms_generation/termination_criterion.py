@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# main.py
+# termination_criterion.py
 
 """
 Computer-assisted language learning: verbforms list generation
