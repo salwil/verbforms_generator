@@ -1,8 +1,9 @@
 import unittest
-from unittest.mock import patch, MagicMock
-from src.verbforms_generation.verbforms_generation import verbforms
 
-class Verbforms(unittest.TestCase):
+from src.verbforms_generation.verbforms_generation.verb import TimeForm
+from src.verbforms_generation.verbforms_generation.verbforms import Verbforms
+
+class VerbformsTest(unittest.TestCase):
     """
     This test class demonstrates how the defined triggers perfectly work for generating a question starting with the
     desired interrogative pronoun.
@@ -13,9 +14,18 @@ class Verbforms(unittest.TestCase):
     """
 
     def setUp(self) -> None:
-        self.verbforms = verbforms.Verbforms("geht")
+        self.verbforms = Verbforms("geht")
 
-    def test_read_html_for_given_verb(self):
-        self.verbforms.read_html_for_given_verb()
-        # todo: add assertions
+    def test_buidl_verb_object(self):
+        #self.verbforms.read_html_for_given_verb()
+        self.verbforms.parse_html_for_verbforms()
+        self.assertEqual(self.verbforms.praesens.infinitive, 'gehen')
+        self.assertEqual(self.verbforms.praesens.timeform, TimeForm.PRAESENS)
+        self.assertEqual(self.verbforms.praesens.timeform, TimeForm.PRAESENS)
+        self.assertEqual(
+            self.verbforms.praesens.conjugations,
+            {'ich': 'geh(e)', 'du': 'gehst', 'er': 'geht', 'wir': 'geh(e)n', 'ihr': 'geht', 'sie': 'geh(e)n'})
+
+
+    # todo: add tests per each method
 

@@ -13,17 +13,51 @@ Institute for Computational Linguistics
 - read verbforms from https://www.verbformen.de/ and prepare them for csv file
 
 """
+import re
 from urllib import request
+
+from src.verbforms_generation.verbforms_generation.verb import Verb, Praesens, Praeteritum
+
 
 class Verbforms:
     def __init__(self, verb: str):
         self.verb_in_any_form: str = verb
-        self.verb_data_raw = self.read_html_for_given_verb()
+        self.verb_html = self.read_html_for_given_verb()
+        self.conjugation_table = self.parse_html_for_verbforms()
+        self.praesens: Praesens = None
+        self.praeteritum: Praeteritum = None
+        self.build_verb_object()
 
     def read_html_for_given_verb(self):
         with request.urlopen('https://www.verbformen.de/?w=gehen') as response:
-            return response.read()
+            html = response.read().decode("utf-8")
+            return re.sub('\n', '', html)
 
-    def extract_verbforms_from_html(self):
-        pass
-        #todo: extract required data and construct verb object (investigate in html.parser libary)
+    def build_verb_object(self):
+        self.praesens = Praesens(self.parse_html_for_infinitive(), {})
+        praesens_conjugation = self.conjugation_table[0].split(', ')
+        praesens_conjugation[0] = praesens_conjugation[0].replace('Präsens: ', '')
+        for c in praesens_conjugation:
+            person = c.split(' ')[0]
+            conjugated_verb = c.split(' ')[1]
+            self.praesens.conjugations[person] = conjugated_verb
+
+    def parse_html_for_infinitive(self):
+        infinitiv = re.findall(r'<title>Konjugation .*</title>', self.verb_html)[0]
+        infinitive = re.search(
+            '%s(.*)%s' % ('<title>Konjugation "',
+                          '" - Alle Formen des Verbs, Beispiele, Regeln | Netzverb Wörterbuch</title>'),
+            infinitiv).group(1)
+        return infinitive
+
+    def parse_html_for_verbforms(self):
+        #verb = re.findall(r'<tr><td>ich </td><td>geh.*</td>', text)
+        verb_forms_raw = re.findall(r'Präsens</b>:.*</li>', self.verb_html)[0]
+        verb_forms_raw = verb_forms_raw.replace('</b>:', ': ')
+        verb_forms_raw = verb_forms_raw.replace('<li>', ' ')
+        verb_forms_raw = verb_forms_raw.replace('</li> ', '')
+        verb_forms_raw = verb_forms_raw.replace('</li>\t', '')
+        verb_forms_raw = verb_forms_raw.replace('\t', '')
+        conjugation_table = verb_forms_raw.split(r'<b>')
+        return conjugation_table
+

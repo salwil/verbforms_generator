@@ -14,10 +14,26 @@ Institute for Computational Linguistics
 
 """
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
+from enum import Enum
+
+class TimeForm(Enum):
+    PRAESENS = 'praesens'
+    PRAETERITUM = 'praeteritum'
 
 @dataclass
 class Verb:
-    infinitive: str (init=True, repr=True)
-    present: {'ich': None, 'du': None, 'er/sie/es': None, 'wir': None, 'ihr': None, 'sie': None}
+    infinitive: str = field(init=True, repr=True)
+    conjugations: {} = field(init=True)
+
+@dataclass
+class Praesens(Verb):
+    timeform: TimeForm = field(default=TimeForm.PRAESENS, init = False)
+
+@dataclass
+class Praeteritum(Verb):
+    timeform: TimeForm = field(default=TimeForm.PRAETERITUM, init = False)
+
+
+
 
