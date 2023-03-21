@@ -19,6 +19,7 @@ class VerbformsTest(unittest.TestCase):
         self.assertEqual(
             self.verbforms_gehen.praesens.conjugations,
             {'ich': 'geh(e)', 'du': 'gehst', 'er': 'geht', 'wir': 'geh(e)n', 'ihr': 'geht', 'sie': 'geh(e)n'})
+        self.assertEqual(self.verbforms_gehen.praesens.language_level, 'A1')
 
     def test_parse_html_for_infinitive(self):
         self.assertEqual(self.verbforms_gehen.parse_html_for_infinitive(), 'gehen')
