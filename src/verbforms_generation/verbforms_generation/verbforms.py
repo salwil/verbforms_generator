@@ -19,7 +19,6 @@ from urllib import request
 
 from src.verbforms_generation.verbforms_generation.verb import Verb, Praesens, Praeteritum
 
-
 class Verbforms:
     def __init__(self, verb: str):
         self.verb_in_any_form: str = verb
@@ -73,3 +72,5 @@ class Verbforms:
                           '. </span>'),
             lang_level_html).group(1)
         return lang_level
+
+
