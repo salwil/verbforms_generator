@@ -28,11 +28,12 @@ class Verbforms:
         self.praesens: Praesens = None
         self.praeteritum: Praeteritum = None
         self.build_verb_object()
+        self.language_level = self.parse_html_for_language_level()
 
     def read_html_for_given_verb(self):
         url = 'https://www.verbformen.de/?'
         params = {'w': self.verb_in_any_form}
-        # https://www.verbformen.de/?w=gehen
+        # Bsp Format: https://www.verbformen.de/?w=gehen
         with request.urlopen(url + urllib.parse.urlencode(params)) as response:
             html = response.read().decode("utf-8")
             return re.sub('\n', '', html)
@@ -47,11 +48,11 @@ class Verbforms:
             self.praesens.conjugations[person] = conjugated_verb
 
     def parse_html_for_infinitive(self):
-        infinitiv = re.findall(r'<title>Konjugation .*</title>', self.verb_html)[0]
+        infinitive_html = re.findall(r'<title>Konjugation .*</title>', self.verb_html)[0]
         infinitive = re.search(
             '%s(.*)%s' % ('<title>Konjugation "',
                           '" - Alle Formen des Verbs, Beispiele, Regeln | Netzverb Wörterbuch</title>'),
-            infinitiv).group(1)
+            infinitive_html).group(1)
         return infinitive
 
     def parse_html_for_verbforms(self):
@@ -65,3 +66,10 @@ class Verbforms:
         conjugation_table = verb_forms_raw.split(r'<b>')
         return conjugation_table
 
+    def parse_html_for_language_level(self):
+        lang_level_html = re.findall(r'Das Verb gehört zum Wortschatz des Zertifikats Deutsch bzw. zur Stufe [A-Z][0-9]. </span>', self.verb_html)[0]
+        lang_level = re.search(
+            '%s([A-Z][0-9])%s' % ('Das Verb gehört zum Wortschatz des Zertifikats Deutsch bzw. zur Stufe ',
+                          '. </span>'),
+            lang_level_html).group(1)
+        return lang_level
