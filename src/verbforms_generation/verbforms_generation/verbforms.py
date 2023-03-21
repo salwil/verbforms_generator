@@ -14,6 +14,7 @@ Institute for Computational Linguistics
 
 """
 import re
+import urllib
 from urllib import request
 
 from src.verbforms_generation.verbforms_generation.verb import Verb, Praesens, Praeteritum
@@ -29,7 +30,10 @@ class Verbforms:
         self.build_verb_object()
 
     def read_html_for_given_verb(self):
-        with request.urlopen('https://www.verbformen.de/?w=gehen') as response:
+        url = 'https://www.verbformen.de/?'
+        params = {'w': self.verb_in_any_form}
+        # https://www.verbformen.de/?w=gehen
+        with request.urlopen(url + urllib.parse.urlencode(params)) as response:
             html = response.read().decode("utf-8")
             return re.sub('\n', '', html)
 

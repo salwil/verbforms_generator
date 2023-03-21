@@ -14,18 +14,18 @@ class VerbformsTest(unittest.TestCase):
     """
 
     def setUp(self) -> None:
-        self.verbforms = Verbforms("geht")
+        self.verbforms_gehen = Verbforms("geht")
+        self.verbforms_sein = Verbforms("seien")
 
-    def test_buidl_verb_object(self):
+    def test_build_verb_object(self):
         #self.verbforms.read_html_for_given_verb()
-        self.verbforms.parse_html_for_verbforms()
-        self.assertEqual(self.verbforms.praesens.infinitive, 'gehen')
-        self.assertEqual(self.verbforms.praesens.timeform, TimeForm.PRAESENS)
-        self.assertEqual(self.verbforms.praesens.timeform, TimeForm.PRAESENS)
+        self.verbforms_gehen.parse_html_for_verbforms()
+        self.assertEqual(self.verbforms_gehen.praesens.infinitive, 'gehen')
+        self.assertEqual(self.verbforms_gehen.praesens.timeform, TimeForm.PRAESENS)
+        self.assertEqual(self.verbforms_gehen.praesens.timeform, TimeForm.PRAESENS)
         self.assertEqual(
-            self.verbforms.praesens.conjugations,
+            self.verbforms_gehen.praesens.conjugations,
             {'ich': 'geh(e)', 'du': 'gehst', 'er': 'geht', 'wir': 'geh(e)n', 'ihr': 'geht', 'sie': 'geh(e)n'})
 
-
-    # todo: add tests per each method
-
+    def test_parse_html_for_infinitive(self):
+        self.assertEqual(self.verbforms_sein.parse_html_for_infinitive(), 'sein')
