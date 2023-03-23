@@ -19,24 +19,15 @@ import warnings
 with warnings.catch_warnings():
     warnings.simplefilter("ignore")
 
-    """
-    from src.conversation.conversation.termination_criterion import TerminationCriterionForConversation
-    from src.conversation_turn.conversation_turn.turn import ConversationTurn
-    from src.conversation.conversation.conversation import Conversation, Language
-    """
-
-
 def main():
     with warnings.catch_warnings():
         warnings.simplefilter("ignore")
         cli = CLI()
         cli.maintain_interaction()
 
-
 class CLI:
     def __init__(self):
         self.termination_criterion = TerminationCriterionForConversation()
-
 
     def maintain_interaction(self):
         turn_number = 1
