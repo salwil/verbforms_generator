@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# verbforms.py
+# verbforms_ui.py
 
 """
 Computer-assisted language learning: verbforms list generation

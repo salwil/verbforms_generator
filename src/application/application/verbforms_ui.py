@@ -17,15 +17,17 @@ Institute for Computational Linguistics
 
 """
 
-from flask import Flask, render_template
+from flask import Flask, render_template, request
+from src.verbforms_generation.verbforms_generation.verbforms import Verbforms
 
 app = Flask(__name__)
 
 @app.route('/verbforms_generator/welcome')
-def hello_world(verb=None):
-    return render_template('verbforms_generator.html', name=verb)
+def welcome():
+    return render_template('welcome.html')
 
-@app.route('/verbforms_generator/')
-@app.route('/verbforms_generator/<verb>')
-def get_verb_forms(verb=None):
-    return render_template('verbforms_generator.html', name=verb)
+@app.route('/verbforms_generator', methods=['POST'])
+def verbforms_generator():
+    verb=request.form['verb']
+    verbforms = Verbforms(verb)
+    return render_template('verbforms_generator.html', verb=verbforms.praesens.infinitive)

@@ -1,10 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Title</title>
+    <meta charset="UTF-8">
+    <title>Welcome to the Verbforms Generator</title>
 </head>
 <body>
-
+<h2>Please enter the verb you want to conjugate below.</h2>
+<form action="/verbforms_generator" method="post">
+    <label for="verb">Verb in any form: </label>
+    <input type="text" name="verb" value="" required>
+    <input type="submit" value="Submit">
+</form>
 </body>
 </html>
