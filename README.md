@@ -7,6 +7,5 @@
 - Other content per card: language level (A1, A2, ...) sample sentence, ...
 
 ## Requirements
-- numpy==1.6.1
-- scikit-learn==0.17
-- mlconjug
+- Flask
+- Spacy

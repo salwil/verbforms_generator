@@ -14,7 +14,6 @@ Institute for Computational Linguistics
 
 """
 from .termination_criterion import TerminationCriterionForConversation
-import time
 import warnings
 
 with warnings.catch_warnings():

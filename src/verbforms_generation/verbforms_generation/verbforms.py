@@ -17,11 +17,14 @@ import re
 import urllib
 from urllib import request
 
+from src.verbforms_generation.verbforms_generation.lemmatize import GermanLemmatizer
 from src.verbforms_generation.verbforms_generation.verb import Verb, Praesens, Praeteritum
 
 class Verbforms:
     def __init__(self, verb: str):
+        self.german_lemmatizer = GermanLemmatizer()
         self.verb_in_any_form: str = verb
+        self.infinitive = self.get_infinitive()
         self.verb_html = self.read_html_for_given_verb()
         self.conjugation_table = self.parse_html_for_verbforms()
         self.praesens: Praesens = None
@@ -31,14 +34,14 @@ class Verbforms:
 
     def read_html_for_given_verb(self):
         url = 'https://www.verbformen.de/?'
-        params = {'w': self.verb_in_any_form}
+        params = {'w': self.infinitive}
         # Bsp Format: https://www.verbformen.de/?w=gehen
         with request.urlopen(url + urllib.parse.urlencode(params)) as response:
             html = response.read().decode("utf-8")
             return re.sub('\n', '', html)
 
     def build_verb_object(self):
-        self.praesens = Praesens(self.parse_html_for_infinitive(), {}, self.language_level)
+        self.praesens = Praesens(self.infinitive, {}, self.language_level)
         praesens_conjugation = self.conjugation_table[0].split(', ')
         praesens_conjugation[0] = praesens_conjugation[0].replace('Präsens: ', '')
         for c in praesens_conjugation:
@@ -46,13 +49,8 @@ class Verbforms:
             conjugated_verb = c.split(' ')[1]
             self.praesens.conjugations[person] = conjugated_verb
 
-    def parse_html_for_infinitive(self):
-        infinitive_html = re.findall(r'<title>Konjugation .*</title>', self.verb_html)[0]
-        infinitive = re.search(
-            '%s(.*)%s' % ('<title>Konjugation "',
-                          '" - Alle Formen des Verbs, Beispiele, Regeln | Netzverb Wörterbuch</title>'),
-            infinitive_html).group(1)
-        return infinitive
+    def get_infinitive(self):
+        return self.german_lemmatizer.lemmatize(self.verb_in_any_form)
 
     def parse_html_for_verbforms(self):
         #verb = re.findall(r'<tr><td>ich </td><td>geh.*</td>', text)
