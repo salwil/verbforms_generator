@@ -22,7 +22,7 @@ from src.verbforms_generation.verbforms_generation.verbforms import Verbforms
 
 app = Flask(__name__)
 
-@app.route('/verbforms_generator/welcome')
+@app.route('/verbforms_generator')
 def welcome():
     return render_template('welcome.html')
 
