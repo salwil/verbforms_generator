@@ -11,9 +11,11 @@ Institute for Computational Linguistics
 
 - main module for maintaining interaction with user
 - from https://flask.palletsprojects.com/en/1.1.x/quickstart/
-- export FLASK_APP=src/verbforms_generation/verbforms_generation/main.py
-- python3.8 -m flask run
+- for linux: export FLASK_APP=src/application/application/verbforms_ui.py
+- for windows: set FLASK_APP=src/application/application/verbforms_ui.py
+- python3.8 -m flask run or python -m flask run
 - start with flask run and open http://127.0.0.1:5000/ in the browser
+- to end control c
 
 """
 
