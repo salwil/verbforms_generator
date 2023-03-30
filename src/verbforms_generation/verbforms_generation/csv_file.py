@@ -18,8 +18,6 @@ import os
 from datetime import datetime
 from pathlib import Path
 
-from src.verbforms_generation.verbforms_generation.verb import Verb, Praesens, Praeteritum
-
 class CsvFile:
     def __init__(self):
         self.directory_path = self.get_project_path() + '/index_cards'

@@ -2,14 +2,23 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Title</title>
+    <title>Verbforms Generator</title>
 </head>
 <body>
+
 {% if verb %}
   <h1>Verb forms for "{{ verb }}":</h1>
 {% else %}
   <h1>Please enter a verb to get a conjugation table</h1>
 {% endif %}
+
+<h2>Please enter another verb you want to conjugate below...</h2>
+<form action="/verbforms_generator" method="post">
+    <label for="verb">Verb in any form: </label>
+    <input type="text" name="verb" value="" required>
+    <input type="submit" value="Submit">
+</form>
+<h2>... or hit download to download the CSV with all the verb conjugations</h2>
 <div class="container" align="left">
     <a href="/verbforms_generator/download" target="blank"><button>Download</button></a>
 </div>
