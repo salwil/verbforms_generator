@@ -3,28 +3,39 @@
 <head>
     <meta charset="UTF-8">
     <title>Verbforms Generator</title>
+    <link rel="stylesheet" type="text/css" href="../static/stylesheets/stylesheet.css">
 </head>
 <body>
 
 {% if verb %}
-  <h1>Verb forms for "{{ verb }}":</h1>
-  {% for verbform in conjugation_table %}
-      <p>{{ verbform }} </p>
-  {% endfor %}
-  <p>{{ conjugation_table }}</p>
+<h2>Verb forms for "{{ verb }}":</h2>
+<table>
+    <th>Präsens</th>
+    <th>Präteritum</th>
+    <tr>
+      {% for present, past in conjugation_table %}
+        <tr>
+            <td>{{ present }} </td>
+            <td>{{ past }} </td>
+        </tr>
+      {% endfor %}
+    </tr>
+</table>
 {% else %}
   <h1>Please enter a verb to get a conjugation table</h1>
 {% endif %}
 
-<h2>Please enter another verb you want to conjugate below...</h2>
+<h2>What to do next</h2>
 <form action="/verbforms_generator" method="post">
-    <label for="verb">Verb in any form: </label>
+    <label for="verb">Enter another verb you want to conjugate: </label>
     <input type="text" name="verb" value="" required>
     <input type="submit" value="Submit">
 </form>
-<h2>... or hit download to download the CSV with all the verb conjugations</h2>
+<p>... or download the file with all the verb conjugations:
 <div class="container" align="left">
-    <a href="/verbforms_generator/download" target="blank"><button>Download</button></a>
+    <a href="/verbforms_generator/download" target="blank"><button>Download verbforms</button></a>
 </div>
+</p>
+
 </body>
 </html>
