@@ -38,13 +38,13 @@ class Verbforms:
             return re.sub('\n', '', html)
 
     def build_verb_object(self):
-        self.praesens = Praesens(self.parse_html_for_infinitive(), {}, self.language_level)
+        self.praesens = Praesens(self.parse_html_for_infinitive(), [], self.language_level)
         praesens_conjugation = self.conjugation_table[0].split(', ')
         praesens_conjugation[0] = praesens_conjugation[0].replace('Präsens: ', '')
         for c in praesens_conjugation:
-            person = c.split(' ')[0]
-            conjugated_verb = c.split(' ')[1]
-            self.praesens.conjugations[person] = conjugated_verb
+            #person = c.split(' ')[0]
+            #conjugated_verb = c.split(' ')[1]
+            self.praesens.conjugations.append(c)
 
     def parse_html_for_infinitive(self):
         infinitive_html = re.findall(r'<title>Konjugation .*</title>', self.verb_html)[0]

@@ -8,6 +8,9 @@
 
 {% if verb %}
   <h1>Verb forms for "{{ verb }}":</h1>
+  {% for verbform in conjugation_table %}
+      <p>{{ verbform }} </p>
+  {% endfor %}
   <p>{{ conjugation_table }}</p>
 {% else %}
   <h1>Please enter a verb to get a conjugation table</h1>

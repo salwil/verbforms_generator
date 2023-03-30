@@ -24,7 +24,7 @@ class TimeForm(Enum):
 @dataclass
 class Verb:
     infinitive: str = field(init=True, repr=True)
-    conjugations: {} = field(init=True)
+    conjugations: list = field(init=True)
     language_level: str = field(init=True, repr=True)
 
 @dataclass

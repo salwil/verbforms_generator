@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 
-# welcome.py
+# verbforms_ui.py
 
 """
 Computer-assisted language learning: verbforms list generation
@@ -34,12 +34,7 @@ def welcome():
 def verbforms_generator():
     verb=request.form['verb']
     verbforms = Verbforms(verb)
-    csv_file_for_verbs.write_record(['ich ' + verbforms.praesens.conjugations['ich'],
-                                     'du ' + verbforms.praesens.conjugations['du'],
-                                     'er ' + verbforms.praesens.conjugations['er'],
-                                     'wir ' + verbforms.praesens.conjugations['wir'],
-                                     'ihr ' + verbforms.praesens.conjugations['ihr'],
-                                     'sie ' + verbforms.praesens.conjugations['sie']])
+    csv_file_for_verbs.write_record(verbforms.praesens.conjugations)
     return render_template('verbforms_generator.html', verb=verbforms.praesens.infinitive, conjugation_table=verbforms.praesens.conjugations)
 
 @app.route('/verbforms_generator/download')
