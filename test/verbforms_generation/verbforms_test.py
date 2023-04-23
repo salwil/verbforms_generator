@@ -10,7 +10,7 @@ class VerbformsTest(unittest.TestCase):
         self.verbforms_kriechen = Verbforms("kriechst")
 
     def test_build_verb_object(self):
-        self.assertEqual(self.verbforms_gehen.verb.infinitive, 'gehen')
+        self.assertEqual(self.verbforms_gehen.verb.infinitive_german, 'gehen')
         self.assertEqual(
             [('ich geh(e)', 'du gingst'),
              ('du gehst', 'du gingst'),
@@ -18,7 +18,7 @@ class VerbformsTest(unittest.TestCase):
              ('wir geh(e)n', 'wir gingen'),
              ('ihr geht', 'ihr gingt'),
              ('sie geh(e)n', 'sie gingen')],
-            self.verbforms_gehen.verb.conjugations
+            self.verbforms_gehen.verb.german_conjugations
         )
         self.assertEqual(self.verbforms_gehen.verb.language_level, 'A1')
 

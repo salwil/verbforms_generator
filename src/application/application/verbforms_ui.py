@@ -36,9 +36,9 @@ def welcome():
 def verbforms_generator():
     verb=request.form['verb']
     verbforms = Verbforms(verb)
-    print(verbforms.verb.conjugations)
-    csv_file_for_verbs.write_record(verbforms.verb.conjugations)
-    return render_template('verbforms_generator.html', verb=verbforms.verb.infinitive, conjugation_table=verbforms.verb.conjugations)
+    print(verbforms.verb.german_conjugations)
+    csv_file_for_verbs.write_record(verbforms.verb)
+    return render_template('verbforms_generator.html', verb=verbforms.verb.infinitive_german, conjugation_table=verbforms.verb.german_conjugations)
 
 @app.route('/verbforms_generator/download')
 def download_file_with_verbs():

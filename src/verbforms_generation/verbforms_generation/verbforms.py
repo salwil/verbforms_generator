@@ -41,10 +41,10 @@ class Verbforms:
         praesens_conjugation = self.conjugation_table[0].split(', ')
         praesens_conjugation[0] = praesens_conjugation[0].replace('Präsens: ', '')
         past_conjugation = self.conjugation_table[1].split(', ')
-        past_conjugation[0] = past_conjugation[1].replace('Präteritum: ', '')
+        past_conjugation[0] = past_conjugation[0].replace('Präteritum: ', '')
         # todo: second element in tuple shall be past instead of present (not implemented yet)
         for present, past in zip(praesens_conjugation, past_conjugation):
-            self.verb.conjugations.append((present,past))
+            self.verb.german_conjugations.append((present, past))
 
     def parse_html_for_infinitive(self):
         infinitive_html = re.findall(r'<title>Konjugation .*</title>', self.verb_html)[0]

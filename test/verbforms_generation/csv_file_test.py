@@ -2,6 +2,8 @@ import time
 import unittest
 
 from src.verbforms_generation.verbforms_generation.csv_file import CsvFile
+from src.verbforms_generation.verbforms_generation.verb import Verb
+
 
 class VerbformsTest(unittest.TestCase):
 
@@ -18,12 +20,17 @@ class VerbformsTest(unittest.TestCase):
     def test_generate_name(self):
         print(self.csv_file_1.file_path)
         print(self.csv_file_2.file_path)
-        #self.assertEqual(47, len(self.csv_file_1.file_path))
         self.assertTrue(self.csv_file_1.file_path.endswith('-index-cards.csv'))
         self.assertNotEqual(self.csv_file_1.file_path, self.csv_file_2.file_path)
 
     def test_write_record(self):
-        self.csv_file_1.write_record(["Hello", "World"])
-        self.csv_file_2.write_record(["Goodbye", "World"])
-        # todo: write assertions
+        conjugation_table = [('ich gehe', 'ich ging'),
+                              ('du gehst', 'du gingst'),
+                              ('sie geht', 'sie ging'),
+                              ('wir gehen', 'wir gingen'),
+                              ('ihr geht', 'ihr gingt'),
+                              ('sie gehen', 'sie gingen')]
+        verb = Verb('go', conjugation_table, 'A1')
+        self.csv_file_1.write_record(verb)
+        # todo: write assertions, currently manual verification of file content needed
 
