@@ -24,16 +24,9 @@ class TimeForm(Enum):
 @dataclass
 class Verb:
     infinitive: str = field(init=True, repr=True)
-    conjugations: {} = field(init=True)
+    conjugations: list = field(init=True)
     language_level: str = field(init=True, repr=True)
 
-@dataclass
-class Praesens(Verb):
-    timeform: TimeForm = field(default=TimeForm.PRAESENS, init = False)
-
-@dataclass
-class Praeteritum(Verb):
-    timeform: TimeForm = field(default=TimeForm.PRAETERITUM, init = False)
 
 
 

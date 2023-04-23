@@ -17,15 +17,14 @@ import re
 import urllib
 from urllib import request
 
-from src.verbforms_generation.verbforms_generation.verb import Verb, Praesens, Praeteritum
+from src.verbforms_generation.verbforms_generation.verb import Verb
 
 class Verbforms:
     def __init__(self, verb: str):
         self.verb_in_any_form: str = verb
         self.verb_html = self.read_html_for_given_verb()
         self.conjugation_table = self.parse_html_for_verbforms()
-        self.praesens: Praesens = None
-        self.praeteritum: Praeteritum = None
+        self.verb: Verb = None
         self.language_level = self.parse_html_for_language_level()
         self.build_verb_object()
 
@@ -38,13 +37,14 @@ class Verbforms:
             return re.sub('\n', '', html)
 
     def build_verb_object(self):
-        self.praesens = Praesens(self.parse_html_for_infinitive(), {}, self.language_level)
+        self.verb = Verb(self.parse_html_for_infinitive(), [], self.language_level)
         praesens_conjugation = self.conjugation_table[0].split(', ')
         praesens_conjugation[0] = praesens_conjugation[0].replace('Präsens: ', '')
-        for c in praesens_conjugation:
-            person = c.split(' ')[0]
-            conjugated_verb = c.split(' ')[1]
-            self.praesens.conjugations[person] = conjugated_verb
+        past_conjugation = self.conjugation_table[1].split(', ')
+        past_conjugation[0] = past_conjugation[1].replace('Präteritum: ', '')
+        # todo: second element in tuple shall be past instead of present (not implemented yet)
+        for present, past in zip(praesens_conjugation, past_conjugation):
+            self.verb.conjugations.append((present,past))
 
     def parse_html_for_infinitive(self):
         infinitive_html = re.findall(r'<title>Konjugation .*</title>', self.verb_html)[0]
