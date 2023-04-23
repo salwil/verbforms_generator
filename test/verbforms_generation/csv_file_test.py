@@ -30,7 +30,7 @@ class VerbformsTest(unittest.TestCase):
                               ('wir gehen', 'wir gingen'),
                               ('ihr geht', 'ihr gingt'),
                               ('sie gehen', 'sie gingen')]
-        verb = Verb('go', conjugation_table, 'A1')
+        verb = Verb('gehen', 'go', conjugation_table, 'A1')
         self.csv_file_1.write_record(verb)
         # todo: write assertions, currently manual verification of file content needed
 

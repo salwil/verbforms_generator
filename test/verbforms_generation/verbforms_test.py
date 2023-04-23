@@ -12,7 +12,7 @@ class VerbformsTest(unittest.TestCase):
     def test_build_verb_object(self):
         self.assertEqual(self.verbforms_gehen.verb.infinitive_german, 'gehen')
         self.assertEqual(
-            [('ich geh(e)', 'du gingst'),
+            [('ich geh(e)', 'ich ging'),
              ('du gehst', 'du gingst'),
              ('er geht', 'er ging'),
              ('wir geh(e)n', 'wir gingen'),
@@ -23,9 +23,14 @@ class VerbformsTest(unittest.TestCase):
         self.assertEqual(self.verbforms_gehen.verb.language_level, 'A1')
 
     def test_parse_html_for_infinitive(self):
-        self.assertEqual(self.verbforms_gehen.parse_html_for_infinitive(), 'gehen')
-        self.assertEqual(self.verbforms_sein.parse_html_for_infinitive(), 'sein')
+        self.assertEqual(self.verbforms_gehen.parse_html_for_german_infinitive(), 'gehen')
+        self.assertEqual(self.verbforms_sein.parse_html_for_german_infinitive(), 'sein')
 
     def test_parse_html_for_language_level(self):
         self.assertEqual(self.verbforms_gehen.parse_html_for_language_level(), 'A1')
         self.assertEqual(self.verbforms_kriechen.parse_html_for_language_level(), 'C2')
+
+    def test_parse_html_for_english_translation(self):
+        self.assertEqual(self.verbforms_gehen.parse_html_for_english_infinitive(), 'go')
+        self.assertEqual(self.verbforms_sein.parse_html_for_english_infinitive(), 'be')
+        self.assertEqual(self.verbforms_kriechen.parse_html_for_english_infinitive(), 'creep')

@@ -7,3 +7,5 @@ build
 venv/
 dist/
 index_cards/
+translation.py
+translation_test.py

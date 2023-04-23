@@ -37,7 +37,7 @@ class Verbforms:
             return re.sub('\n', '', html)
 
     def build_verb_object(self):
-        self.verb = Verb(self.parse_html_for_infinitive(), [], self.language_level)
+        self.verb = Verb(self.parse_html_for_german_infinitive(), self.parse_html_for_english_infinitive(), [], self.language_level)
         praesens_conjugation = self.conjugation_table[0].split(', ')
         praesens_conjugation[0] = praesens_conjugation[0].replace('Präsens: ', '')
         past_conjugation = self.conjugation_table[1].split(', ')
@@ -46,7 +46,7 @@ class Verbforms:
         for present, past in zip(praesens_conjugation, past_conjugation):
             self.verb.german_conjugations.append((present, past))
 
-    def parse_html_for_infinitive(self):
+    def parse_html_for_german_infinitive(self):
         infinitive_html = re.findall(r'<title>Konjugation .*</title>', self.verb_html)[0]
         infinitive = re.search(
             '%s(.*)%s' % ('<title>Konjugation "',
@@ -73,4 +73,12 @@ class Verbforms:
             lang_level_html).group(1)
         return lang_level
 
+    def parse_html_for_english_infinitive(self):
+        engl_translation_html = re.findall(r'title="Englisch" alt="Englisch"src="/bedeutungenweb/en.svg" width="13" height="13">&nbsp;</span><span>.*</span>', self.verb_html)[0]
+        engl_translation = re.search(
+            '%s(.*)%s' % ('title="Englisch" alt="Englisch"src="/bedeutungenweb/en.svg" width="13" height="13">&nbsp;</span><span>',
+                          '</span>'),
+            engl_translation_html).group(1)
+        # currently we just return the first of a list of possible translation, assuming this is the best matching choice
+        return engl_translation.split(',')[0]
 
