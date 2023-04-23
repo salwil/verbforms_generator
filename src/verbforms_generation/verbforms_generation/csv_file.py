@@ -18,12 +18,13 @@ import os
 from datetime import datetime
 from pathlib import Path
 
+from src.verbforms_generation.verbforms_generation import helpers
 from src.verbforms_generation.verbforms_generation.verb import Verb
 
 
 class CsvFile:
     def __init__(self):
-        self.directory_path = self.get_project_path() + '/index_cards'
+        self.directory_path = helpers.get_project_path() + '/index_cards'
         if not (os.path.exists(self.directory_path)):
             os.makedirs(self.directory_path)
         self.file_path = self.generate_name()
@@ -49,7 +50,7 @@ class CsvFile:
         list_of_timeforms = ['Präsens', 'Präteritum']
         for verb_person, person in zip(verb.german_conjugations, list_of_persons):
             for time_form, time_name in zip(verb_person, list_of_timeforms):
-                list_of_records.append([verb.infinitive_german + ', ' + person + ', ' + time_name, time_form])
+                list_of_records.append([verb.infinitive_english + ', ' + person + ', ' + time_name, time_form])
         return list_of_records
 
     def write_record(self, verb: Verb):
@@ -60,24 +61,4 @@ class CsvFile:
     def close_file(self):
         self.csvfile.close()
 
-    def get_project_path(self):
-        path = Path(__file__)
-        if os.path.dirname(path).endswith('verbforms_generator'):
-            return os.path.dirname(path)
-        elif os.path.dirname(path.parent).endswith('verbforms_generator'):
-            return os.path.dirname(path.parent)
-        elif os.path.dirname(path.parent.parent).endswith('verbforms_generator'):
-            return os.path.dirname(path.parent.parent)
-        elif os.path.dirname(path.parent.parent.parent).endswith('verbforms_generator'):
-            return os.path.dirname(path.parent.parent.parent)
-        elif os.path.dirname(path.parent.parent.parent.parent).endswith('verbforms_generator'):
-            return os.path.dirname(path.parent.parent.parent.parent)
-        elif os.path.dirname(path.parent.parent.parent.parent.parent).endswith(
-                'verbforms_generator'):
-            return os.path.dirname(path.parent.parent.parent.parent.parent)
-        elif os.path.dirname(path.parent.parent.parent.parent.parent.parent).endswith(
-                'verbforms_generator'):
-            return os.path.dirname(path.parent.parent.parent.parent.parent.parent)
-        else:
-            return os.path.dirname((path))
 
