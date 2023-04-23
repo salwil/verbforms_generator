@@ -21,4 +21,6 @@ class IndexCard:
         self.verb = verb
 
     def write_card (self, csv_writer):
-        csv_writer.writerow([self.verb.infinitive] + [self.verb.language_level])
+        csv_writer.writerow([self.verb.infinitive_german] + [self.verb.language_level])
+
+
