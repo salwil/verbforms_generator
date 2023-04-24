@@ -26,45 +26,51 @@ from src.verbforms_generation.verbforms_generation.verbforms import Verbforms
 
 app = Flask(__name__)
 
-csv_file_for_verbs = CsvFile()
+#csv_file_for_verbs = CsvFile()
 
-class CurrentScreen():
+class CurrentDialogue():
     def __init__(self):
         self.verb = None
+        self.csv_file_for_verbs = CsvFile()
 
-current_screen = CurrentScreen()
+current_dialogue = CurrentDialogue()
 
 @app.route('/verbforms_generator')
 def welcome():
+    #todo: find out how csv_file_for_verbs can be re-initialized
+    current_dialogue.csv_file_for_verbs.open_file()
     return render_template('welcome.html')
 
 @app.route('/verbforms_generator', methods=['POST'])
 def verbforms_generator():
     verb=request.form['next_verb']
-    current_screen.verb = Verbforms(verb)
-    print(current_screen.verb.verb.german_conjugations)
+    current_dialogue.verb = Verbforms(verb)
+    print(current_dialogue.verb.verb.german_conjugations)
     #csv_file_for_verbs.write_record(verbforms.verb)
     return render_template('verbforms_generator.html',
-                           next_verb=current_screen.verb.verb.infinitive_german,
-                           english_translation=current_screen.verb.verb.infinitive_english,
-                           conjugation_table=current_screen.verb.verb.german_conjugations)
+                           next_verb=current_dialogue.verb.verb.infinitive_german,
+                           english_translation=current_dialogue.verb.verb.infinitive_english,
+                           conjugation_table=current_dialogue.verb.verb.german_conjugations)
 
 @app.route('/verbforms_generator/add', methods=['POST'])
 def add_verb_to_list():
-    print(current_screen.verb.verb.german_conjugations)
-    csv_file_for_verbs.write_record(current_screen.verb.verb)
+    print(current_dialogue.verb.verb.german_conjugations)
+    current_dialogue.csv_file_for_verbs.write_record(current_dialogue.verb.verb)
     return render_template('verbforms_generator.html',
-                           next_verb=current_screen.verb.verb.infinitive_german,
-                           english_translation=current_screen.verb.verb.infinitive_english,
-                           conjugation_table=current_screen.verb.verb.german_conjugations)
+                           next_verb=current_dialogue.verb.verb.infinitive_german,
+                           english_translation=current_dialogue.verb.verb.infinitive_english,
+                           conjugation_table=current_dialogue.verb.verb.german_conjugations)
 
 @app.route('/verbforms_generator/download')
 def download_file_with_verbs():
-    csv_file_for_verbs.close_file()
-    return send_file(csv_file_for_verbs.file_path)
+    if current_dialogue.csv_file_for_verbs.is_open:
+        current_dialogue.csv_file_for_verbs.close_file()
+        return render_template('download.html')
+    else:
+        return send_file(current_dialogue.csv_file_for_verbs.file_path)
+
 
 @app.route('/verbforms_generator/goodbye')
 def goodbye():
-    # todo :this endpoint should be called when the user hits "download" and after that they click another button to finally download the file
     # this is to reduce erroronous behavior of the tool.
-    return render_template('goodbye.html')
+    return render_template('download.html')

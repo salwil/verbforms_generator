@@ -16,7 +16,6 @@ Institute for Computational Linguistics
 import csv
 import os
 from datetime import datetime
-from pathlib import Path
 
 from src.verbforms_generation.verbforms_generation import helpers
 from src.verbforms_generation.verbforms_generation.verb import Verb
@@ -28,7 +27,8 @@ class CsvFile:
         if not (os.path.exists(self.directory_path)):
             os.makedirs(self.directory_path)
         self.file_path = self.generate_name()
-        self.csvfile = open(self.file_path, 'w')
+        self.is_open = None
+        self.csvfile = self.open_file()
         self.csv_writer = csv.writer(self.csvfile, delimiter = '\t', quotechar='"')
 
     def generate_name (self):
@@ -58,7 +58,12 @@ class CsvFile:
         for record in records:
             self.csv_writer.writerow(record)
 
+    def open_file(self):
+        self.is_open = True
+        return open(self.file_path, 'w')
+
     def close_file(self):
         self.csvfile.close()
+        self.is_open = False
 
 
