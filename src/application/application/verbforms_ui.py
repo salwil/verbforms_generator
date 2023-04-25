@@ -19,28 +19,53 @@ Institute for Computational Linguistics
 
 """
 
-from flask import Flask, render_template, request, send_file
+from flask import Flask, render_template, request, send_file, current_app, g
 
 from src.verbforms_generation.verbforms_generation.csv_file import CsvFile
 from src.verbforms_generation.verbforms_generation.verbforms import Verbforms
 
 app = Flask(__name__)
 
-csv_file_for_verbs = CsvFile()
+app_ctx = app.app_context()
+app_ctx.push()
+
 
 @app.route('/verbforms_generator')
 def welcome():
+    #todo: find out how csv_file_for_verbs can be re-initialized
+    current_app.config['verb_file'] = CsvFile()
+    current_app.config['verb_file'].open_file()
     return render_template('welcome.html')
 
 @app.route('/verbforms_generator', methods=['POST'])
 def verbforms_generator():
-    verb=request.form['verb']
-    verbforms = Verbforms(verb)
-    print(verbforms.verb.german_conjugations)
-    csv_file_for_verbs.write_record(verbforms.verb)
-    return render_template('verbforms_generator.html', verb=verbforms.verb.infinitive_german, conjugation_table=verbforms.verb.german_conjugations)
+    verb=request.form['next_verb']
+    current_app.config['verb'] = Verbforms(verb)
+    print(current_app.config['verb'].verb.german_conjugations)
+    return render_template('verbforms_generator.html',
+                           next_verb=current_app.config['verb'].verb.infinitive_german,
+                           english_translation=current_app.config['verb'].verb.infinitive_english,
+                           conjugation_table=current_app.config['verb'].verb.german_conjugations)
+
+@app.route('/verbforms_generator/add', methods=['POST'])
+def add_verb_to_list():
+    print(current_app.config['verb'].verb.german_conjugations)
+    current_app.config['verb_file'].write_record(current_app.config['verb'].verb)
+    return render_template('verbforms_generator.html',
+                           next_verb=current_app.config['verb'].verb.infinitive_german,
+                           english_translation=current_app.config['verb'].verb.infinitive_english,
+                           conjugation_table=current_app.config['verb'].verb.german_conjugations)
 
 @app.route('/verbforms_generator/download')
 def download_file_with_verbs():
-    csv_file_for_verbs.close_file()
-    return send_file(csv_file_for_verbs.file_path), render_template('welcome.html')
+    if current_app.config['verb_file'].is_open:
+        current_app.config['verb_file'].close_file()
+        return render_template('download.html')
+    else:
+        return send_file(current_app.config['verb_file'].file_path)
+
+
+@app.route('/verbforms_generator/goodbye')
+def goodbye():
+    # this is to reduce erroronous behavior of the tool.
+    return render_template('download.html')
