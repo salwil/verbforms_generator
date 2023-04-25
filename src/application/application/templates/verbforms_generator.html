@@ -8,7 +8,7 @@
 <body>
 
 {% if next_verb %}
-<h2>You entered a form of "{{ next_verb }}". The English translation of "{{ next_verb }}" is  "{{ english_translation }}".</h2>
+<h2>You entered a form of the German verb "{{ next_verb }}". The English translation of "{{ next_verb }}" is  "{{ english_translation }}".</h2>
 <h2>German conjugation table:</h2>
 <table>
     <th>Präsens</th>
@@ -22,21 +22,23 @@
       {% endfor %}
     </tr>
 </table>
+<br>
 <form action="/verbforms_generator/add" method="post">
     <input type="submit" value="Add this verb to my Anki list">
 </form>
+<h2>What to do next</h2>
 {% else %}
-  <h1>Please enter a verb to get a conjugation table</h1>
+  <h2>Please enter a verb to get a conjugation table</h2>
 {% endif %}
 
-<h2>What to do next</h2>
 <form action="/verbforms_generator" method="post">
     <label for="next_verb">Enter another verb you want to conjugate: </label>
     <input type="text" name="next_verb" value="" required>
     <input type="submit" value="Submit">
 </form>
-<p>... or download the file with all the verb conjugations:
+<p>
 <div class="container" align="left">
+    ... or download the file with all the verb conjugations:
     <!-- todo: change this to link to the goodbye page and from there the file can be downloaded -->
     <a href="/verbforms_generator/download" target="blank"><button>Download verbforms</button></a>
 </div>
