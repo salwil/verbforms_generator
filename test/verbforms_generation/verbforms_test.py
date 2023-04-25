@@ -8,6 +8,7 @@ class VerbformsTest(unittest.TestCase):
         self.verbforms_gehen = Verbforms("geht")
         self.verbforms_sein = Verbforms("seien")
         self.verbforms_kriechen = Verbforms("kriechst")
+        self.verbforms_nonverb = Verbforms("Hallo")
 
     def test_build_verb_object(self):
         self.assertEqual(self.verbforms_gehen.verb.infinitive_german, 'gehen')
@@ -34,3 +35,6 @@ class VerbformsTest(unittest.TestCase):
         self.assertEqual(self.verbforms_gehen.parse_html_for_english_infinitive(), 'go')
         self.assertEqual(self.verbforms_sein.parse_html_for_english_infinitive(), 'be')
         self.assertEqual(self.verbforms_kriechen.parse_html_for_english_infinitive(), 'creep')
+
+    def test_build_verb_object_with_nonverb(self):
+        self.assertEqual(self.verbforms_nonverb.verb, None)

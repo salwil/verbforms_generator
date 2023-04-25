@@ -37,48 +37,64 @@ class Verbforms:
             return re.sub('\n', '', html)
 
     def build_verb_object(self):
-        self.verb = Verb(self.parse_html_for_german_infinitive(), self.parse_html_for_english_infinitive(), [], self.language_level)
-        praesens_conjugation = self.conjugation_table[0].split(', ')
-        praesens_conjugation[0] = praesens_conjugation[0].replace('Präsens: ', '')
-        past_conjugation = self.conjugation_table[1].split(', ')
-        past_conjugation[0] = past_conjugation[0].replace('Präteritum: ', '')
-        # todo: second element in tuple shall be past instead of present (not implemented yet)
-        for present, past in zip(praesens_conjugation, past_conjugation):
-            self.verb.german_conjugations.append((present, past))
+        german_infinitive = self.parse_html_for_german_infinitive()
+        english_infinitive = self.parse_html_for_english_infinitive()
+        lang_level = self.parse_html_for_language_level()
+        if german_infinitive and lang_level:
+            self.verb = Verb(german_infinitive, english_infinitive, [], lang_level)
+            praesens_conjugation = self.conjugation_table[0].split(', ')
+            praesens_conjugation[0] = praesens_conjugation[0].replace('Präsens: ', '')
+            past_conjugation = self.conjugation_table[1].split(', ')
+            past_conjugation[0] = past_conjugation[0].replace('Präteritum: ', '')
+            # todo: second element in tuple shall be past instead of present (not implemented yet)
+            for present, past in zip(praesens_conjugation, past_conjugation):
+                self.verb.german_conjugations.append((present, past))
+
 
     def parse_html_for_german_infinitive(self):
-        infinitive_html = re.findall(r'<title>Konjugation .*</title>', self.verb_html)[0]
-        infinitive = re.search(
-            '%s(.*)%s' % ('<title>Konjugation "',
-                          '" - Alle Formen des Verbs, Beispiele, Regeln | Netzverb Wörterbuch</title>'),
-            infinitive_html).group(1)
-        return infinitive
+        try:
+            infinitive_html = re.findall(r'<title>Konjugation .*</title>', self.verb_html)[0]
+            infinitive = re.search(
+                '%s(.*)%s' % ('<title>Konjugation "',
+                              '" - Alle Formen des Verbs, Beispiele, Regeln | Netzverb Wörterbuch</title>'),
+                infinitive_html).group(1)
+            return infinitive
+        except IndexError:
+            return None
 
     def parse_html_for_verbforms(self):
-        #verb = re.findall(r'<tr><td>ich </td><td>geh.*</td>', text)
-        verb_forms_raw = re.findall(r'Präsens</b>:.*</li>', self.verb_html)[0]
-        verb_forms_raw = verb_forms_raw.replace('</b>:', ': ')
-        verb_forms_raw = verb_forms_raw.replace('<li>', ' ')
-        verb_forms_raw = verb_forms_raw.replace('</li> ', '')
-        verb_forms_raw = verb_forms_raw.replace('</li>\t', '')
-        verb_forms_raw = verb_forms_raw.replace('\t', '')
-        conjugation_table = verb_forms_raw.split(r'<b>')
-        return conjugation_table
+        try:
+            verb_forms_raw = re.findall(r'Präsens</b>:.*</li>', self.verb_html)[0]
+            verb_forms_raw = verb_forms_raw.replace('</b>:', ': ')
+            verb_forms_raw = verb_forms_raw.replace('<li>', ' ')
+            verb_forms_raw = verb_forms_raw.replace('</li> ', '')
+            verb_forms_raw = verb_forms_raw.replace('</li>\t', '')
+            verb_forms_raw = verb_forms_raw.replace('\t', '')
+            conjugation_table = verb_forms_raw.split(r'<b>')
+            return conjugation_table
+        except IndexError:
+            return None
 
     def parse_html_for_language_level(self):
-        lang_level_html = re.findall(r'Das Verb gehört zum Wortschatz des Zertifikats Deutsch bzw. zur Stufe [A-Z][0-9]. </span>', self.verb_html)[0]
-        lang_level = re.search(
-            '%s([A-Z][0-9])%s' % ('Das Verb gehört zum Wortschatz des Zertifikats Deutsch bzw. zur Stufe ',
-                          '. </span>'),
-            lang_level_html).group(1)
-        return lang_level
+        try:
+            lang_level_html = re.findall(r'Das Verb gehört zum Wortschatz des Zertifikats Deutsch bzw. zur Stufe [A-Z][0-9]. </span>', self.verb_html)[0]
+            lang_level = re.search(
+                '%s([A-Z][0-9])%s' % ('Das Verb gehört zum Wortschatz des Zertifikats Deutsch bzw. zur Stufe ',
+                              '. </span>'),
+                lang_level_html).group(1)
+            return lang_level
+        except IndexError:
+            return None
 
     def parse_html_for_english_infinitive(self):
-        engl_translation_html = re.findall(r'title="Englisch" alt="Englisch"src="/bedeutungenweb/en.svg" width="13" height="13">&nbsp;</span><span>.*</span>', self.verb_html)[0]
-        engl_translation = re.search(
-            '%s(.*)%s' % ('title="Englisch" alt="Englisch"src="/bedeutungenweb/en.svg" width="13" height="13">&nbsp;</span><span>',
-                          '</span>'),
-            engl_translation_html).group(1)
-        # currently we just return the first of a list of possible translation, assuming this is the best matching choice
-        return engl_translation.split(',')[0]
+        try:
+            engl_translation_html = re.findall(r'title="Englisch" alt="Englisch"src="/bedeutungenweb/en.svg" width="13" height="13">&nbsp;</span><span>.*</span>', self.verb_html)[0]
+            engl_translation = re.search(
+                '%s(.*)%s' % ('title="Englisch" alt="Englisch"src="/bedeutungenweb/en.svg" width="13" height="13">&nbsp;</span><span>',
+                              '</span>'),
+                engl_translation_html).group(1)
+            # currently we just return the first of a list of possible translation, assuming this is the best matching choice
+            return engl_translation.split(',')[0]
+        except IndexError:
+            return None
 
