@@ -8,4 +8,7 @@
 
 ## Requirements
 - flask
-- 
+- flask_
+- de_core_news_sm
+- en_core_web_sm
+- flask_wtf
