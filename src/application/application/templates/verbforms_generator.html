@@ -6,43 +6,77 @@
     <link rel="stylesheet" type="text/css" href="../static/stylesheets/stylesheet.css">
 </head>
 <body>
-
 {% if next_verb %}
-<h2>You entered a form of the German verb "{{ next_verb }}". The English translation of "{{ next_verb }}" is  "{{ english_translation }}".</h2>
-<h2>German conjugation table:</h2>
-<table>
-    <th>Präsens</th>
-    <th>Präteritum</th>
-    <tr>
-      {% for present, past in conjugation_table %}
-        <tr>
-            <td>{{ present }} </td>
-            <td>{{ past }} </td>
-        </tr>
-      {% endfor %}
-    </tr>
-</table>
-<br>
-<form action="/verbforms_generator/add" method="post">
-    <input type="submit" value="Add this verb to my Anki list">
-</form>
-<h2>What to do next</h2>
+    <h2>You entered a form of the German verb "{{ next_verb }}". The English translation of "{{ next_verb }}" is  "{{ english_translation }}".</h2>
+    <h2>German conjugation table:</h2>
+    <fieldset>
+        <table>
+            <th>Präsens</th>
+            <th>Präteritum</th>
+            <tr>
+              {% for present, past in conjugation_table %}
+                <tr>
+                    <td>{{ present }} </td>
+                    <td>{{ past }} </td>
+                </tr>
+              {% endfor %}
+            </tr>
+        </table>
+        <h3>Which forms would you like to export?</h3>
+        <form action="/verbforms_generator/add" method="post">
+            <p>
+                {{ checkboxes.praesens() }} {{ checkboxes.praesens.label }}
+                {{ checkboxes.praeteritum() }} {{ checkboxes.praeteritum.label }}
+                {{ checkboxes.imperativ() }} {{ checkboxes.imperativ.label }}
+                {{ checkboxes.konjunktiv1() }} {{ checkboxes.konjunktiv1.label }}
+                {{ checkboxes.konjunktiv2() }} {{ checkboxes.konjunktiv2.label }}
+                {{ checkboxes.perfekt() }} {{ checkboxes.perfekt.label }}
+                {{ checkboxes.plusquamperfekt() }} {{ checkboxes.plusquamperfekt.label }}
+                {{ checkboxes.futur1() }} {{ checkboxes.futur1.label }}
+                {{ checkboxes.futur2() }} {{ checkboxes.futur2.label }}
+            </p>
+            {% if checkboxes.praesens.errors %}
+                <ul class="errors">
+                    {% for error in checkboxes.praesens.errors %}
+                        <li>{{ error }}</li>
+                    {% endfor %}
+                </ul>
+            {% endif %}
+            <br>
+            <input type="submit" value="Add this verb to my Anki list">
+        </form>
+    </fieldset>
+    <br>
+    <br>
+          <!--<input type="checkbox"
+                 value="praesens",
+                 value="praeteritum",
+                 value="imperativ",
+                 value="konjunktiv1",
+                 value="konjunktiv2",
+                 value="perfekt",
+                 value="plusquamperfekt",
+                 value="futur1",
+                 value="futur2">
+        <input type="submit" value="Add this verb to my Anki list">
+    </form>-->
+    <h2>What to do next</h2>
 {% else %}
   <h2>We could not find the verb you entered.</h2>
 {% endif %}
-
-<form action="/verbforms_generator" method="post">
-    <label for="next_verb">Enter another verb you want to conjugate: </label>
-    <input type="text" name="next_verb" value="" required>
-    <input type="submit" value="Submit">
-</form>
-<p>
-<div class="container" align="left">
-    ... or download the file with all the verb conjugations:
-    <!-- todo: change this to link to the goodbye page and from there the file can be downloaded -->
-    <a href="/verbforms_generator/download" target="blank"><button>Download verbforms</button></a>
-</div>
-</p>
-
+<fieldset>
+    <form action="/verbforms_generator" method="post">
+        <label for="next_verb">Enter another verb you want to conjugate: </label>
+        <input type="text" name="next_verb" value="" required>
+        <input type="submit" value="Submit">
+    </form>
+    <p>
+    <div class="container" align="left">
+        ... or download the file with all the verb conjugations:
+        <!-- todo: change this to link to the goodbye page and from there the file can be downloaded -->
+        <a href="/verbforms_generator/download" target="blank"><button>Download verbforms</button></a>
+    </div>
+    </p>
+</fieldset>
 </body>
 </html>

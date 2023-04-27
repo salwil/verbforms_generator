@@ -31,6 +31,7 @@ class VerbformsTest(unittest.TestCase):
                               ('ihr geht', 'ihr gingt'),
                               ('sie gehen', 'sie gingen')]
         verb = Verb('gehen', 'go', conjugation_table, 'A1')
-        self.csv_file_1.write_record(verb)
+        list_of_timeforms = [True, False, True, False, False, False, False, False, False]
+        self.csv_file_1.write_record(verb, list_of_timeforms)
         # todo: write assertions, currently manual verification of file content needed
 

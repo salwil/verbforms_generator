@@ -42,19 +42,30 @@ class CsvFile:
                    .strftime("%H-%M-%S") \
                + '-index-cards.csv'
 
-    def convert_verb_forms_to_csv_records(self, verb: Verb):
+    def convert_verb_forms_to_csv_records(self, verb: Verb, list_of_timeforms: list):
         # todo: extract list of records for writing into csv-file: [(ich gehe, ich ging), (du gehst, du gingst),...] --> [ich gehe, I go]
         list_of_records = []
         list_of_persons = ['1st pers. sing', '2nd pers. sing', '3rd pers. sing', '1st pers. pl', '2nd pers. pl', '3rd pers. pl']
+        time_form_names = ['Präsens',
+                           'Präteritum',
+                           'Imperativ',
+                           'Konjunktiv I',
+                           'Konjunktiv II',
+                           'Perfekt',
+                           'Plusquamperfekt',
+                           'Futur I',
+                           'Futur II' ]
         # list of timeforms will be dynamic in the future
-        list_of_timeforms = ['Präsens', 'Präteritum']
         for verb_person, person in zip(verb.german_conjugations, list_of_persons):
-            for time_form, time_name in zip(verb_person, list_of_timeforms):
-                list_of_records.append([verb.infinitive_english + ', ' + person + ', ' + time_name, time_form])
+            for time_form_verb, time_form, time_form_name in zip(verb_person, list_of_timeforms, time_form_names):
+                if time_form:
+                    list_of_records.append([verb.infinitive_english + ', ' + person + ', ' + time_form_name, time_form_verb])
+                else:
+                    pass
         return list_of_records
 
-    def write_record(self, verb: Verb):
-        records = self.convert_verb_forms_to_csv_records(verb)
+    def write_record(self, verb: Verb, list_of_timeforms: list):
+        records = self.convert_verb_forms_to_csv_records(verb, list_of_timeforms)
         for record in records:
             self.csv_writer.writerow(record)
 
