@@ -20,6 +20,13 @@ from enum import Enum
 class TimeForm(Enum):
     PRAESENS = 'praesens'
     PRAETERITUM = 'praeteritum'
+    IMPERATIV = 'imperativ'
+    KONJUNKTIV1 = "konjunktiv1",
+    KONJUNKTIV2 = "konjunktiv2",
+    PERFEKT = "perfekt",
+    PLUSQUAMPERFEKT = "plusquamperfekt",
+    FUTUR1 = "futur1",
+    FUTUR2 = "futur2"
 
 @dataclass
 class Verb:
