@@ -8,6 +8,7 @@ verbforms_kriechen = Verbforms("kriechst")
 verbforms_nonverb = Verbforms("Hallo")
 verbforms_gewesen = Verbforms("gewesen")
 verbforms_stellen = Verbforms("stellen")
+verbforms_komplementieren = Verbforms("komplementieren")
 
 class VerbformsTest(unittest.TestCase):
 
@@ -79,9 +80,11 @@ class VerbformsTest(unittest.TestCase):
         self.assertEqual(True, verbforms_stellen.parse_html_for_regularity())
 
     def test_parse_html_for_english_translation(self):
-        self.assertEqual(verbforms_gehen.parse_html_for_english_infinitive(), 'go')
-        self.assertEqual(verbforms_sein.parse_html_for_english_infinitive(), 'be')
-        self.assertEqual(verbforms_kriechen.parse_html_for_english_infinitive(), 'creep')
+        self.assertEqual('go, walk, went, leave, sell', verbforms_gehen.parse_html_for_english_infinitive())
+        self.assertEqual('be, stay, exist, been, be (of) opinion',
+                         verbforms_sein.parse_html_for_english_infinitive(), 'be')
+        self.assertEqual('complement', verbforms_komplementieren.parse_html_for_english_infinitive())
+
 
     def test_build_verb_object_with_nonverb(self):
         self.assertEqual(verbforms_nonverb.verb, None)
