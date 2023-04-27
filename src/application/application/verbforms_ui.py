@@ -40,8 +40,8 @@ class TimeFormsCheckbox(FlaskForm):
     praesens = BooleanField('Präsens')
     praeteritum = BooleanField('Präteritum')
     imperativ = BooleanField('Imperativ (n.a.)')
-    konjunktiv1 = BooleanField('Konjunktiv I (n.a.)')
-    konjunktiv2 = BooleanField('Konjunktiv II (n.a.)')
+    konjunktiv1 = BooleanField('Konjunktiv Präsens')
+    konjunktiv2 = BooleanField('Konjunktiv Präteritum')
     perfekt = BooleanField('Perfekt')
     plusquamperfekt = BooleanField('Plusquamperfekt')
     futur1 = BooleanField('Futur I')
@@ -77,21 +77,24 @@ def verbforms_generator():
 def add_verb_to_list():
     current_app.config['verb_file']
     checkboxes = TimeFormsCheckbox()
-    # current list of timeforms in verbforms.py: ['Präsens', 'Präteritum', 'Perfekt', 'Plusquamperfekt', 'Futur I', 'Futur II']
+    # current list of timeforms in verbforms.py: ['Präsens', 'Präteritum', 'Perfekt', 'Plusquamperfekt', 'Futur I', 'Futur II', 'Konjunktiv Präsens', 'Konjunktiv Präteritum']
     list_of_timeforms = [checkboxes.praesens.data,
                          checkboxes.praeteritum.data,
                          #checkboxes.imperativ.data,
-                         #checkboxes.konjunktiv1.data,
-                         #checkboxes.konjunktiv2.data,
                          checkboxes.perfekt.data,
                          checkboxes.plusquamperfekt.data,
                          checkboxes.futur2.data,
-                         checkboxes.futur1.data]
+                         checkboxes.futur1.data,
+                         checkboxes.konjunktiv1.data,
+                         checkboxes.konjunktiv2.data
+                         ]
     current_app.config['verb_file'].write_record(current_app.config['verb'].verb, list_of_timeforms)
     return render_template('verbforms_generator.html',
                            next_verb=current_app.config['verb'].verb.infinitive_german,
                            english_translation=current_app.config['verb'].verb.infinitive_english,
                            conjugation_table=current_app.config['verb'].verb.german_conjugations,
+                           language_level=current_app.config['verb'].verb.language_level,
+                           is_regular=current_app.config['verb'].verb.is_regular,
                            checkboxes=checkboxes)
 
 @app.route('/verbforms_generator/download')

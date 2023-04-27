@@ -28,7 +28,7 @@
             <th>Futur I</th>
             <th>Futur II</th>
             <tr>
-              {% for praesens, praeteritum, perfekt, plusquamperfekt, futur2, futur1 in conjugation_table %}
+              {% for praesens, praeteritum, perfekt, plusquamperfekt, konjunktiv_praesens, konjunktiv_praeteritum, futur2, futur1 in conjugation_table %}
                 <tr>
                     <td>{{ praesens }} </td>
                     <td>{{ praeteritum }} </td>
@@ -46,12 +46,12 @@
                 {{ checkboxes.praesens() }} {{ checkboxes.praesens.label }}
                 {{ checkboxes.praeteritum() }} {{ checkboxes.praeteritum.label }}
                 {{ checkboxes.imperativ() }} {{ checkboxes.imperativ.label }}
-                {{ checkboxes.konjunktiv1() }} {{ checkboxes.konjunktiv1.label }}
-                {{ checkboxes.konjunktiv2() }} {{ checkboxes.konjunktiv2.label }}
                 {{ checkboxes.perfekt() }} {{ checkboxes.perfekt.label }}
                 {{ checkboxes.plusquamperfekt() }} {{ checkboxes.plusquamperfekt.label }}
                 {{ checkboxes.futur1() }} {{ checkboxes.futur1.label }}
                 {{ checkboxes.futur2() }} {{ checkboxes.futur2.label }}
+                {{ checkboxes.konjunktiv1() }} {{ checkboxes.konjunktiv1.label }}
+                {{ checkboxes.konjunktiv2() }} {{ checkboxes.konjunktiv2.label }}
             </p>
             <!--{% if checkboxes.praesens.errors %}
                 <ul class="errors">
