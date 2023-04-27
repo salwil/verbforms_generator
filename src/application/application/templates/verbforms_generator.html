@@ -13,11 +13,19 @@
         <table>
             <th>Präsens</th>
             <th>Präteritum</th>
+            <th>Perfekt</th>
+            <th>Plusquamperfekt</th>
+            <th>Futur I</th>
+            <th>Futur II</th>
             <tr>
-              {% for present, past in conjugation_table %}
+              {% for praesens, praeteritum, perfekt, plusquamperfekt, futur2, futur1 in conjugation_table %}
                 <tr>
-                    <td>{{ present }} </td>
-                    <td>{{ past }} </td>
+                    <td>{{ praesens }} </td>
+                    <td>{{ praeteritum }} </td>
+                    <td>{{ perfekt }} </td>
+                    <td>{{ plusquamperfekt }} </td>
+                    <td>{{ futur1 }} </td>
+                    <td>{{ futur2 }} </td>
                 </tr>
               {% endfor %}
             </tr>
@@ -35,31 +43,19 @@
                 {{ checkboxes.futur1() }} {{ checkboxes.futur1.label }}
                 {{ checkboxes.futur2() }} {{ checkboxes.futur2.label }}
             </p>
-            {% if checkboxes.praesens.errors %}
+            <!--{% if checkboxes.praesens.errors %}
                 <ul class="errors">
                     {% for error in checkboxes.praesens.errors %}
                         <li>{{ error }}</li>
                     {% endfor %}
                 </ul>
-            {% endif %}
+            {% endif %}-->
             <br>
             <input type="submit" value="Add this verb to my Anki list">
         </form>
     </fieldset>
     <br>
     <br>
-          <!--<input type="checkbox"
-                 value="praesens",
-                 value="praeteritum",
-                 value="imperativ",
-                 value="konjunktiv1",
-                 value="konjunktiv2",
-                 value="perfekt",
-                 value="plusquamperfekt",
-                 value="futur1",
-                 value="futur2">
-        <input type="submit" value="Add this verb to my Anki list">
-    </form>-->
     <h2>What to do next</h2>
 {% else %}
   <h2>We could not find the verb you entered.</h2>
