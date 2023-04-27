@@ -25,11 +25,11 @@ class VerbformsTest(unittest.TestCase):
 
     def test_write_record(self):
         conjugation_table = [('ich gehe', 'ich ging'),
-                              ('du gehst', 'du gingst'),
-                              ('sie geht', 'sie ging'),
-                              ('wir gehen', 'wir gingen'),
-                              ('ihr geht', 'ihr gingt'),
-                              ('sie gehen', 'sie gingen')]
+                             ('du gehst', 'du gingst'),
+                             ('sie geht', 'sie ging'),
+                             ('wir gehen', 'wir gingen'),
+                             ('ihr geht', 'ihr gingt'),
+                             ('sie gehen', 'sie gingen')]
         verb = Verb('gehen', 'go', conjugation_table, 'A1')
         list_of_timeforms = [True, False, True, False, False, False, False, False, False]
         self.csv_file_1.write_record(verb, list_of_timeforms)

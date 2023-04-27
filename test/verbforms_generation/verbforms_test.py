@@ -1,13 +1,14 @@
 import unittest
 
+from src.verbforms_generation.verbforms_generation.lemmatize import GermanLemmatizer
 from src.verbforms_generation.verbforms_generation.verbforms import Verbforms
 
-verbforms_gehen = Verbforms("geht")
-verbforms_sein = Verbforms("seien")
-verbforms_kriechen = Verbforms("kriechst")
-verbforms_nonverb = Verbforms("Hallo")
-verbforms_gewesen = Verbforms("gewesen")
-verbforms_stellen = Verbforms("stellen")
+lemmatizer = GermanLemmatizer()
+
+verbforms_gehen = Verbforms("geht", lemmatizer)
+verbforms_sein = Verbforms("seien", lemmatizer)
+verbforms_stellen = Verbforms("stellen", lemmatizer)
+
 
 class VerbformsTest(unittest.TestCase):
 
@@ -72,6 +73,7 @@ class VerbformsTest(unittest.TestCase):
 
     def test_parse_html_for_language_level(self):
         self.assertEqual(verbforms_gehen.parse_html_for_language_level(), 'A1')
+        verbforms_kriechen = Verbforms("kriechst", lemmatizer)
         self.assertEqual(verbforms_kriechen.parse_html_for_language_level(), 'C2')
 
     def test_parse_html_for_regularity(self):
@@ -79,11 +81,18 @@ class VerbformsTest(unittest.TestCase):
         self.assertEqual(True, verbforms_stellen.parse_html_for_regularity())
 
     def test_parse_html_for_english_translation(self):
-        self.assertEqual(verbforms_gehen.parse_html_for_english_infinitive(), 'go')
-        self.assertEqual(verbforms_sein.parse_html_for_english_infinitive(), 'be')
-        self.assertEqual(verbforms_kriechen.parse_html_for_english_infinitive(), 'creep')
+        verbforms_komplementieren = Verbforms("komplementieren", lemmatizer)
+        self.assertEqual('go, walk, went, leave, sell', verbforms_gehen.parse_html_for_english_infinitive())
+        self.assertEqual('be, stay, exist, been, be (of) opinion',
+                         verbforms_sein.parse_html_for_english_infinitive(), 'be')
+        self.assertEqual('complement', verbforms_komplementieren.parse_html_for_english_infinitive())
 
     def test_build_verb_object_with_nonverb(self):
-        self.assertEqual(verbforms_nonverb.verb, None)
-        self.assertEqual(verbforms_gewesen.verb, None)
+        verbforms_nonverb = Verbforms("Hallo", lemmatizer)
+        self.assertEqual(None, verbforms_nonverb.verb)
 
+    def test_input_that_needs_lemmatization(self):
+        verbforms_gewesen = Verbforms("gewesen", lemmatizer)
+        self.assertEqual('sein', verbforms_gewesen.verb.infinitive_german)
+        self.assertEqual('be, stay, exist, been, be (of) opinion', verbforms_gewesen.verb.infinitive_english)
+        self.assertEqual('A1', verbforms_gewesen.verb.language_level)
