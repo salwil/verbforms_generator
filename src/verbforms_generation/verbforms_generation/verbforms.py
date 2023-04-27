@@ -21,9 +21,11 @@ from src.verbforms_generation.verbforms_generation.verb import Verb
 
 class Verbforms:
     def __init__(self, verb: str):
+        self.list_of_timeforms = ['Präsens', 'Präteritum', 'Perfekt', 'Plusquamperfekt', 'Futur I', 'Futur II']
         self.verb_in_any_form: str = verb
         self.verb_html = self.read_html_for_given_verb()
-        self.conjugation_table = self.parse_html_for_verbforms()
+        #self.conjugation_table = self.parse_html_for_verbforms()
+        self.conjugation_dict = self.parse_html_for_verbforms()
         self.verb: Verb = None
         self.language_level = self.parse_html_for_language_level()
         self.build_verb_object()
@@ -42,14 +44,18 @@ class Verbforms:
         lang_level = self.parse_html_for_language_level()
         if german_infinitive and lang_level:
             self.verb = Verb(german_infinitive, english_infinitive, [], lang_level)
-            praesens_conjugation = self.conjugation_table[0].split(', ')
-            praesens_conjugation[0] = praesens_conjugation[0].replace('Präsens: ', '')
-            past_conjugation = self.conjugation_table[1].split(', ')
-            past_conjugation[0] = past_conjugation[0].replace('Präteritum: ', '')
+            #for timeform in list_of_timeforms:
+            #    self.extract_timeform(timeform, list_of_timeforms.index(timeform))
             # todo: second element in tuple shall be past instead of present (not implemented yet)
-            for present, past in zip(praesens_conjugation, past_conjugation):
-                self.verb.german_conjugations.append((present, past))
+                #time = (self.conjugation_dict[timeform][i] for timeform in list_of_timeforms)
+            self.verb.german_conjugations = list(zip(self.conjugation_dict['Präsens'], self.conjugation_dict['Präteritum'], self.conjugation_dict['Perfekt'], self.conjugation_dict['Plusquamperfekt'], self.conjugation_dict['Futur II'], self.conjugation_dict['Futur I']))
+            #for present, past in zip(praesens_conjugation, past_conjugation):
+            #    self.verb.german_conjugations.append((present, past))
 
+    def extract_timeform(self, conjugation_table, timeform: str, index: int):
+        conjugation = conjugation_table[index].split(', ')
+        conjugation[0] = conjugation[0].replace(timeform + ': ', '')
+        return conjugation
 
     def parse_html_for_german_infinitive(self):
         try:
@@ -64,14 +70,18 @@ class Verbforms:
 
     def parse_html_for_verbforms(self):
         try:
-            verb_forms_raw = re.findall(r'Präsens</b>:.*</li>', self.verb_html)[0]
+            verb_forms_raw = re.findall(r'Präsens</b>:.*</li></ul><h3>Konjunktiv Aktiv', self.verb_html)[0]
             verb_forms_raw = verb_forms_raw.replace('</b>:', ': ')
             verb_forms_raw = verb_forms_raw.replace('<li>', ' ')
             verb_forms_raw = verb_forms_raw.replace('</li> ', '')
+            verb_forms_raw = verb_forms_raw.replace('</li></ul><h3>Konjunktiv Aktiv', '')
             verb_forms_raw = verb_forms_raw.replace('</li>\t', '')
             verb_forms_raw = verb_forms_raw.replace('\t', '')
             conjugation_table = verb_forms_raw.split(r'<b>')
-            return conjugation_table
+            conjugation_dict = {}
+            for timeform in self.list_of_timeforms:
+                conjugation_dict[timeform] = self.extract_timeform(conjugation_table, timeform, self.list_of_timeforms.index(timeform))
+            return conjugation_dict
         except IndexError:
             return None
 

@@ -34,4 +34,3 @@ class VerbformsTest(unittest.TestCase):
         list_of_timeforms = [True, False, True, False, False, False, False, False, False]
         self.csv_file_1.write_record(verb, list_of_timeforms)
         # todo: write assertions, currently manual verification of file content needed
-

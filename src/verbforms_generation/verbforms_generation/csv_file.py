@@ -46,15 +46,16 @@ class CsvFile:
         # todo: extract list of records for writing into csv-file: [(ich gehe, ich ging), (du gehst, du gingst),...] --> [ich gehe, I go]
         list_of_records = []
         list_of_persons = ['1st pers. sing', '2nd pers. sing', '3rd pers. sing', '1st pers. pl', '2nd pers. pl', '3rd pers. pl']
+        # current list of timeforms in verbforms.py: ['Präsens', 'Präteritum', 'Perfekt', 'Plusquamperfekt', 'Futur I', 'Futur II']
         time_form_names = ['Präsens',
                            'Präteritum',
-                           'Imperativ',
-                           'Konjunktiv I',
-                           'Konjunktiv II',
+                           #'Imperativ',
+                           #'Konjunktiv I',
+                           #'Konjunktiv II',
                            'Perfekt',
                            'Plusquamperfekt',
-                           'Futur I',
-                           'Futur II' ]
+                           'Futur II',
+                           'Futur I' ]
         # list of timeforms will be dynamic in the future
         for verb_person, person in zip(verb.german_conjugations, list_of_persons):
             for time_form_verb, time_form, time_form_name in zip(verb_person, list_of_timeforms, time_form_names):

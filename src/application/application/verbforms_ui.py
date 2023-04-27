@@ -39,9 +39,9 @@ class TimeFormsCheckbox(FlaskForm):
     # todo: if time, make general form, by also including verb in form (currently separately handled, design could ev. be improved)
     praesens = BooleanField('Präsens')
     praeteritum = BooleanField('Präteritum')
-    imperativ = BooleanField('Imperativ')
-    konjunktiv1 = BooleanField('Konjunktiv I')
-    konjunktiv2 = BooleanField('Konjunktiv II')
+    imperativ = BooleanField('Imperativ, n.a.')
+    konjunktiv1 = BooleanField('Konjunktiv I, n.a.')
+    konjunktiv2 = BooleanField('Konjunktiv II, n.a.')
     perfekt = BooleanField('Perfekt')
     plusquamperfekt = BooleanField('Plusquamperfekt')
     futur1 = BooleanField('Futur I')
@@ -75,18 +75,16 @@ def verbforms_generator():
 def add_verb_to_list():
     current_app.config['verb_file']
     checkboxes = TimeFormsCheckbox()
-    if checkboxes.validate_on_submit():
-        list_of_timeforms = [checkboxes.praesens.data,
-                             checkboxes.praeteritum.data,
-                             checkboxes.imperativ.data,
-                             checkboxes.konjunktiv1.data,
-                             checkboxes.konjunktiv2.data,
-                             checkboxes.perfekt.data,
-                             checkboxes.plusquamperfekt.data,
-                             checkboxes.futur1.data,
-                             checkboxes.futur2.data]
-    else:
-        list_of_timeforms = [False, False, False, False, False, False, False, False, False]
+    # current list of timeforms in verbforms.py: ['Präsens', 'Präteritum', 'Perfekt', 'Plusquamperfekt', 'Futur I', 'Futur II']
+    list_of_timeforms = [checkboxes.praesens.data,
+                         checkboxes.praeteritum.data,
+                         #checkboxes.imperativ.data,
+                         #checkboxes.konjunktiv1.data,
+                         #checkboxes.konjunktiv2.data,
+                         checkboxes.perfekt.data,
+                         checkboxes.plusquamperfekt.data,
+                         checkboxes.futur2.data,
+                         checkboxes.futur1.data]
     current_app.config['verb_file'].write_record(current_app.config['verb'].verb, list_of_timeforms)
     return render_template('verbforms_generator.html',
                            next_verb=current_app.config['verb'].verb.infinitive_german,
