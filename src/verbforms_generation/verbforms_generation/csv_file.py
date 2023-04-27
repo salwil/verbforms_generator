@@ -29,27 +29,28 @@ class CsvFile:
         self.file_path = self.generate_name()
         self.is_open = None
         self.csvfile = self.open_file()
-        self.csv_writer = csv.writer(self.csvfile, delimiter = '\t', quotechar='"')
+        self.csv_writer = csv.writer(self.csvfile, delimiter='\t', quotechar='"')
 
-    def generate_name (self):
+    def generate_name(self):
         return self.directory_path \
-               + '/'\
-               + datetime\
-                   .today()\
+               + '/' \
+               + datetime \
+                   .today() \
                    .strftime("%d-%m-%Y-") \
-               + datetime\
-                   .time(datetime.now())\
+               + datetime \
+                   .time(datetime.now()) \
                    .strftime("%H-%M-%S") \
                + '-index-cards.csv'
 
     def convert_verb_forms_to_csv_records(self, verb: Verb, list_of_timeforms: list):
         # todo: extract list of records for writing into csv-file: [(ich gehe, ich ging), (du gehst, du gingst),...] --> [ich gehe, I go]
         list_of_records = []
-        list_of_persons = ['1st pers. sing', '2nd pers. sing', '3rd pers. sing', '1st pers. pl', '2nd pers. pl', '3rd pers. pl']
+        list_of_persons = ['1st pers. sing', '2nd pers. sing', '3rd pers. sing', '1st pers. pl', '2nd pers. pl',
+                           '3rd pers. pl']
         # current list of timeforms in verbforms.py: ['Präsens', 'Präteritum', 'Perfekt', 'Plusquamperfekt', 'Futur I', 'Futur II']
         time_form_names = ['Präsens',
                            'Präteritum',
-                           #'Imperativ',
+                           # 'Imperativ',
                            'Perfekt',
                            'Plusquamperfekt',
                            'Futur II',
@@ -61,7 +62,8 @@ class CsvFile:
         for verb_person, person in zip(verb.german_conjugations, list_of_persons):
             for time_form_verb, time_form, time_form_name in zip(verb_person, list_of_timeforms, time_form_names):
                 if time_form:
-                    list_of_records.append([verb.infinitive_english + ', ' + person + ', ' + time_form_name, time_form_verb])
+                    list_of_records.append(
+                        [verb.infinitive_english + ', ' + person + ', ' + time_form_name, time_form_verb])
                 else:
                     pass
         return list_of_records
@@ -78,5 +80,3 @@ class CsvFile:
     def close_file(self):
         self.csvfile.close()
         self.is_open = False
-
-

@@ -9,6 +9,7 @@ verbforms_gehen = Verbforms("geht", lemmatizer)
 verbforms_sein = Verbforms("seien", lemmatizer)
 verbforms_stellen = Verbforms("stellen", lemmatizer)
 
+
 class VerbformsTest(unittest.TestCase):
 
     def test_build_verb_object(self):

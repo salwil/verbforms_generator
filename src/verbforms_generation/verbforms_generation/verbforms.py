@@ -20,6 +20,7 @@ from urllib import request
 from src.verbforms_generation.verbforms_generation.lemmatize import GermanLemmatizer
 from src.verbforms_generation.verbforms_generation.verb import Verb
 
+
 class Verbforms:
     def __init__(self, verb: str, lemmatizer: GermanLemmatizer):
         self.list_of_timeforms_indikativ = ['Präsens',
@@ -56,7 +57,7 @@ class Verbforms:
         german_infinitive = self.parse_html_for_german_infinitive()
         english_infinitive = self.parse_html_for_english_infinitive()
         lang_level = self.parse_html_for_language_level()
-        regular =  self.parse_html_for_regularity()
+        regular = self.parse_html_for_regularity()
         if german_infinitive and lang_level:
             self.verb = Verb(german_infinitive, english_infinitive, [], lang_level, regular)
             # todo: second element in tuple shall be past instead of present (not implemented yet)
@@ -122,7 +123,7 @@ class Verbforms:
                 self.verb_html)[0]
             lang_level = re.search(
                 '%s([A-Z][0-9])%s' % ('Das Verb gehört zum Wortschatz des Zertifikats Deutsch bzw. zur Stufe ',
-                              '. </span>'),
+                                      '. </span>'),
                 lang_level_html).group(1)
             return lang_level
         except IndexError:
@@ -145,7 +146,8 @@ class Verbforms:
                               'width="13" height="13">&nbsp;</span><span>',
                               '</span>'),
                 engl_translation_html).group(1)
-            # currently we just return the first of a list of possible translation, assuming this is the best matching choice
+            # currently we just return the first of a list of possible translation, assuming this is the best
+            # matching choice
             return ','.join(engl_translation.split(',')[0:5])
         except IndexError:
             return None
@@ -160,4 +162,3 @@ class Verbforms:
                 return True
         except IndexError:
             return 'Unknown'
-

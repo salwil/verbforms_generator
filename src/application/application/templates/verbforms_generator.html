@@ -7,70 +7,71 @@
 </head>
 <body>
 {% if next_verb %}
-    <h3>You entered a form of the German verb <i>{{ next_verb }}</i>. The English translation of <i>{{ next_verb }}</i> is  <i>to {{ english_translation }}</i>.</h3>
-    <fieldset>
-        <table>
-            <th>Language Level</th>
-            <th>Regular</th>
+<h3>You entered a form of the German verb <i>{{ next_verb }}</i>. The English translation of <i>{{ next_verb }}</i> is
+    <i>to {{ english_translation }}</i>.</h3>
+<fieldset>
+    <table>
+        <th>Language Level</th>
+        <th>Regular</th>
+        <tr>
+            <td>{{ language_level }}</td>
+            <td> {% if is_regular %} Yes {% else %} No {% endif %}</td>
+        </tr>
+    </table>
+</fieldset>
+<!--<h2>German conjugation table:</h2>
+<fieldset>
+    <table>
+        <th>Präsens</th>
+        <th>Präteritum</th>
+        <th>Perfekt</th>
+        <th>Plusquamperfekt</th>
+        <th>Futur I</th>
+        <th>Futur II</th>
+        <tr>
+          {% for praesens, praeteritum, perfekt, plusquamperfekt, konjunktiv_praesens, konjunktiv_praeteritum, futur2, futur1 in conjugation_table %}
             <tr>
-                <td>{{ language_level }} </td>
-                <td> {% if is_regular %} Yes {% else %} No {% endif %}  </td>
+                <td>{{ praesens }} </td>
+                <td>{{ praeteritum }} </td>
+                <td>{{ perfekt }} </td>
+                <td>{{ plusquamperfekt }} </td>
+                <td>{{ futur1 }} </td>
+                <td>{{ futur2 }} </td>
             </tr>
-        </table>
-    </fieldset>
-    <!--<h2>German conjugation table:</h2>
-    <fieldset>
-        <table>
-            <th>Präsens</th>
-            <th>Präteritum</th>
-            <th>Perfekt</th>
-            <th>Plusquamperfekt</th>
-            <th>Futur I</th>
-            <th>Futur II</th>
-            <tr>
-              {% for praesens, praeteritum, perfekt, plusquamperfekt, konjunktiv_praesens, konjunktiv_praeteritum, futur2, futur1 in conjugation_table %}
-                <tr>
-                    <td>{{ praesens }} </td>
-                    <td>{{ praeteritum }} </td>
-                    <td>{{ perfekt }} </td>
-                    <td>{{ plusquamperfekt }} </td>
-                    <td>{{ futur1 }} </td>
-                    <td>{{ futur2 }} </td>
-                </tr>
-              {% endfor %}
-            </tr>
-        </table>-->
-        <h3>Which forms would you like to export?</h3>
-        <form action="/verbforms_generator/add" method="post">
-            <p>
-                {{ checkboxes.praesens() }} {{ checkboxes.praesens.label }}
-                {{ checkboxes.praeteritum() }} {{ checkboxes.praeteritum.label }}
-                {{ checkboxes.imperativ() }} {{ checkboxes.imperativ.label }}
-                {{ checkboxes.perfekt() }} {{ checkboxes.perfekt.label }}
-                {{ checkboxes.plusquamperfekt() }} {{ checkboxes.plusquamperfekt.label }}
-                {{ checkboxes.futur1() }} {{ checkboxes.futur1.label }}
-                {{ checkboxes.futur2() }} {{ checkboxes.futur2.label }}
-                {{ checkboxes.konjunktiv1() }} {{ checkboxes.konjunktiv1.label }}
-                {{ checkboxes.konjunktiv2() }} {{ checkboxes.konjunktiv2.label }}
-            </p>
-            <!--{% if checkboxes.praesens.errors %}
-                <ul class="errors">
-                    {% for error in checkboxes.praesens.errors %}
-                        <li>{{ error }}</li>
-                    {% endfor %}
-                </ul>
-            {% endif %}-->
+          {% endfor %}
+        </tr>
+    </table>-->
+<h3>Which forms would you like to export?</h3>
+<form action="/verbforms_generator/add" method="post">
+    <p>
+        {{ checkboxes.praesens() }} {{ checkboxes.praesens.label }}
+        {{ checkboxes.praeteritum() }} {{ checkboxes.praeteritum.label }}
+        {{ checkboxes.imperativ() }} {{ checkboxes.imperativ.label }}
+        {{ checkboxes.perfekt() }} {{ checkboxes.perfekt.label }}
+        {{ checkboxes.plusquamperfekt() }} {{ checkboxes.plusquamperfekt.label }}
+        {{ checkboxes.futur1() }} {{ checkboxes.futur1.label }}
+        {{ checkboxes.futur2() }} {{ checkboxes.futur2.label }}
+        {{ checkboxes.konjunktiv1() }} {{ checkboxes.konjunktiv1.label }}
+        {{ checkboxes.konjunktiv2() }} {{ checkboxes.konjunktiv2.label }}
+    </p>
+    <!--{% if checkboxes.praesens.errors %}
+        <ul class="errors">
+            {% for error in checkboxes.praesens.errors %}
+                <li>{{ error }}</li>
+            {% endfor %}
+        </ul>
+    {% endif %}-->
 
-            <input type="submit" value="Add this verb to my Anki list">
-        </form>
-    </fieldset>
-    <br>
-    <br>
+    <input type="submit" value="Add this verb to my Anki list">
+</form>
+</fieldset>
+<br>
+<br>
 <fieldset>
     <h3>What to do next</h3>
-{% else %}
-  <h3>We could not find the verb you entered.</h3>
-{% endif %}
+    {% else %}
+    <h3>We could not find the verb you entered.</h3>
+    {% endif %}
     <form action="/verbforms_generator" method="post">
         <label for="next_verb">Enter another verb you want to conjugate: </label>
         <input type="text" name="next_verb" value="" required>
@@ -81,7 +82,9 @@
         ... or download the file with all the verb conjugations:
         <br>
         <!-- todo: change this to link to the goodbye page and from there the file can be downloaded -->
-        <a href="/verbforms_generator/download" target="blank"><button>Download verbforms</button></a>
+        <a href="/verbforms_generator/download" target="blank">
+            <button>Download verbforms</button>
+        </a>
     </div>
     </p>
 </fieldset>

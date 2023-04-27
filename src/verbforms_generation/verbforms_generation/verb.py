@@ -16,14 +16,12 @@ Institute for Computational Linguistics
 
 from dataclasses import dataclass, field
 
+
 @dataclass
 class Verb:
     infinitive_german: str = field(init=True, repr=True)
     infinitive_english: str = field(init=True, repr=True)
     german_conjugations: list = field(init=True)
-    #english_conjugations: list = field(init=True)
+    # english_conjugations: list = field(init=True)
     language_level: str = field(init=True, repr=True)
     is_regular: bool = field(repr=True, default=True)
-
-
-

@@ -39,4 +39,3 @@ def get_project_path():
         return os.path.dirname(path.parent.parent.parent.parent.parent.parent)
     else:
         return os.path.dirname((path))
-

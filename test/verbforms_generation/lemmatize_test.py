@@ -4,6 +4,7 @@ from src.verbforms_generation.verbforms_generation.lemmatize import GermanLemmat
 
 lemmatizer = GermanLemmatizer()
 
+
 class LemmatizeTest(unittest.TestCase):
 
     def test_lemmatize_verb(self):
