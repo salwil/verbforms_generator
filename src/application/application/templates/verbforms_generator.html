@@ -14,7 +14,7 @@
             <th>Regular</th>
             <tr>
                 <td>{{ language_level }} </td>
-                <td>{{ is_regular }} </td>
+                <td> {% if is_regular %} Yes {% else %} No {% endif %}  </td>
             </tr>
         </table>
     </fieldset>
