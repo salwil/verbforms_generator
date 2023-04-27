@@ -50,12 +50,13 @@ class CsvFile:
         time_form_names = ['Präsens',
                            'Präteritum',
                            #'Imperativ',
-                           #'Konjunktiv I',
-                           #'Konjunktiv II',
                            'Perfekt',
                            'Plusquamperfekt',
                            'Futur II',
-                           'Futur I' ]
+                           'Futur I',
+                           'Konjunktiv Präsens',
+                           'Konjunktiv Präteritum',
+                           ]
         # list of timeforms will be dynamic in the future
         for verb_person, person in zip(verb.german_conjugations, list_of_persons):
             for time_form_verb, time_form, time_form_name in zip(verb_person, list_of_timeforms, time_form_names):

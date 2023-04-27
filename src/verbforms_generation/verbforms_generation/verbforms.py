@@ -21,7 +21,8 @@ from src.verbforms_generation.verbforms_generation.verb import Verb
 
 class Verbforms:
     def __init__(self, verb: str):
-        self.list_of_timeforms = ['Präsens', 'Präteritum', 'Perfekt', 'Plusquamperfekt', 'Futur I', 'Futur II']
+        self.list_of_timeforms_indikativ = ['Präsens', 'Präteritum', 'Perfekt', 'Plusquamperfekt', 'Futur I', 'Futur II']
+        self.list_of_timeforms_konjunktiv = ['Präsens', 'Präteritum']
         self.verb_in_any_form: str = verb
         self.verb_html = self.read_html_for_given_verb()
         self.conjugation_dict = self.parse_html_for_verbforms()
@@ -50,7 +51,9 @@ class Verbforms:
                                                      self.conjugation_dict['Perfekt'],
                                                      self.conjugation_dict['Plusquamperfekt'],
                                                      self.conjugation_dict['Futur II'],
-                                                     self.conjugation_dict['Futur I']))
+                                                     self.conjugation_dict['Futur I'],
+                                                     self.conjugation_dict['Konjunktiv Präsens'],
+                                                     self.conjugation_dict['Konjunktiv Präteritum']))
 
     def extract_timeform(self, conjugation_table, timeform: str, index: int):
         conjugation = conjugation_table[index].split(', ')
@@ -70,6 +73,7 @@ class Verbforms:
 
     def parse_html_for_verbforms(self):
         try:
+            # Indikativ
             verb_forms_raw = re.findall(r'Präsens</b>:.*</li></ul><h3>Konjunktiv Aktiv', self.verb_html)[0]
             verb_forms_raw = verb_forms_raw.replace('</b>:', ': ')
             verb_forms_raw = verb_forms_raw.replace('<li>', ' ')
@@ -79,8 +83,19 @@ class Verbforms:
             verb_forms_raw = verb_forms_raw.replace('\t', '')
             conjugation_table = verb_forms_raw.split(r'<b>')
             conjugation_dict = {}
-            for timeform in self.list_of_timeforms:
-                conjugation_dict[timeform] = self.extract_timeform(conjugation_table, timeform, self.list_of_timeforms.index(timeform))
+            for timeform in self.list_of_timeforms_indikativ:
+                conjugation_dict[timeform] = self.extract_timeform(conjugation_table, timeform, self.list_of_timeforms_indikativ.index(timeform))
+            verb_forms_raw = re.findall(r'<h3>Konjunktiv Aktiv</h3><ul><li><b>.*<b>Plusquamperfekt</b>:', self.verb_html)[0]
+            verb_forms_raw = verb_forms_raw.replace('</b>:', ': ')
+            verb_forms_raw = verb_forms_raw.replace('<li>', ' ')
+            verb_forms_raw = verb_forms_raw.replace('</li> ', '')
+            verb_forms_raw = verb_forms_raw.replace('<h3>Konjunktiv Aktiv</h3><ul> <b>', '')
+            verb_forms_raw = verb_forms_raw.replace('</li>\t', '')
+            verb_forms_raw = verb_forms_raw.replace('\t', '')
+            conjugation_table = verb_forms_raw.split(r'<b>')
+            for timeform in self.list_of_timeforms_konjunktiv:
+                conjugation_dict['Konjunktiv ' + timeform] = \
+                    self.extract_timeform(conjugation_table, timeform, self.list_of_timeforms_indikativ.index(timeform))
             return conjugation_dict
         except IndexError:
             return None
