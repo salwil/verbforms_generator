@@ -15,18 +15,6 @@ Institute for Computational Linguistics
 """
 
 from dataclasses import dataclass, field
-from enum import Enum
-
-class TimeForm(Enum):
-    PRAESENS = 'praesens'
-    PRAETERITUM = 'praeteritum'
-    IMPERATIV = 'imperativ'
-    KONJUNKTIV1 = "konjunktiv1",
-    KONJUNKTIV2 = "konjunktiv2",
-    PERFEKT = "perfekt",
-    PLUSQUAMPERFEKT = "plusquamperfekt",
-    FUTUR1 = "futur1",
-    FUTUR2 = "futur2"
 
 @dataclass
 class Verb:
@@ -35,7 +23,7 @@ class Verb:
     german_conjugations: list = field(init=True)
     #english_conjugations: list = field(init=True)
     language_level: str = field(init=True, repr=True)
-
+    is_regular: bool = field(repr=True, default=True)
 
 
 

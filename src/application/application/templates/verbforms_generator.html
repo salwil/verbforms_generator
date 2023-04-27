@@ -7,8 +7,18 @@
 </head>
 <body>
 {% if next_verb %}
-    <h2>You entered a form of the German verb "{{ next_verb }}". The English translation of "{{ next_verb }}" is  "{{ english_translation }}".</h2>
-    <h2>German conjugation table:</h2>
+    <h3>You entered a form of the German verb <i>{{ next_verb }}</i>. The English translation of <i>{{ next_verb }}</i> is  <i>to {{ english_translation }}</i>.</h3>
+    <fieldset>
+        <table>
+            <th>Language Level</th>
+            <th>Regular</th>
+            <tr>
+                <td>{{ language_level }} </td>
+                <td>{{ is_regular }} </td>
+            </tr>
+        </table>
+    </fieldset>
+    <!--<h2>German conjugation table:</h2>
     <fieldset>
         <table>
             <th>Präsens</th>
@@ -29,7 +39,7 @@
                 </tr>
               {% endfor %}
             </tr>
-        </table>
+        </table>-->
         <h3>Which forms would you like to export?</h3>
         <form action="/verbforms_generator/add" method="post">
             <p>
@@ -50,17 +60,17 @@
                     {% endfor %}
                 </ul>
             {% endif %}-->
-            <br>
+
             <input type="submit" value="Add this verb to my Anki list">
         </form>
     </fieldset>
     <br>
     <br>
-    <h2>What to do next</h2>
-{% else %}
-  <h2>We could not find the verb you entered.</h2>
-{% endif %}
 <fieldset>
+    <h3>What to do next</h3>
+{% else %}
+  <h3>We could not find the verb you entered.</h3>
+{% endif %}
     <form action="/verbforms_generator" method="post">
         <label for="next_verb">Enter another verb you want to conjugate: </label>
         <input type="text" name="next_verb" value="" required>
@@ -69,6 +79,7 @@
     <p>
     <div class="container" align="left">
         ... or download the file with all the verb conjugations:
+        <br>
         <!-- todo: change this to link to the goodbye page and from there the file can be downloaded -->
         <a href="/verbforms_generator/download" target="blank"><button>Download verbforms</button></a>
     </div>
