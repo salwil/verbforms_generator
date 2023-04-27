@@ -8,7 +8,7 @@ Computer-assisted language learning: verbforms list generation
 Jana Hofmann, Salome Wildermuth
 Matrikel-Nr: 17-709-361, 10-289-544
 University of Zurich
-Institute for Computational Linguistics
+Institute for Computational Linguisticsself
 
 - read verbforms from https://www.verbformen.de/ and prepare them for csv file
 
@@ -24,7 +24,6 @@ class Verbforms:
         self.list_of_timeforms = ['Präsens', 'Präteritum', 'Perfekt', 'Plusquamperfekt', 'Futur I', 'Futur II']
         self.verb_in_any_form: str = verb
         self.verb_html = self.read_html_for_given_verb()
-        #self.conjugation_table = self.parse_html_for_verbforms()
         self.conjugation_dict = self.parse_html_for_verbforms()
         self.verb: Verb = None
         self.language_level = self.parse_html_for_language_level()
@@ -42,15 +41,16 @@ class Verbforms:
         german_infinitive = self.parse_html_for_german_infinitive()
         english_infinitive = self.parse_html_for_english_infinitive()
         lang_level = self.parse_html_for_language_level()
+        regular =  self.parse_html_for_regularity()
         if german_infinitive and lang_level:
-            self.verb = Verb(german_infinitive, english_infinitive, [], lang_level)
-            #for timeform in list_of_timeforms:
-            #    self.extract_timeform(timeform, list_of_timeforms.index(timeform))
+            self.verb = Verb(german_infinitive, english_infinitive, [], lang_level, regular)
             # todo: second element in tuple shall be past instead of present (not implemented yet)
-                #time = (self.conjugation_dict[timeform][i] for timeform in list_of_timeforms)
-            self.verb.german_conjugations = list(zip(self.conjugation_dict['Präsens'], self.conjugation_dict['Präteritum'], self.conjugation_dict['Perfekt'], self.conjugation_dict['Plusquamperfekt'], self.conjugation_dict['Futur II'], self.conjugation_dict['Futur I']))
-            #for present, past in zip(praesens_conjugation, past_conjugation):
-            #    self.verb.german_conjugations.append((present, past))
+            self.verb.german_conjugations = list(zip(self.conjugation_dict['Präsens'],
+                                                     self.conjugation_dict['Präteritum'],
+                                                     self.conjugation_dict['Perfekt'],
+                                                     self.conjugation_dict['Plusquamperfekt'],
+                                                     self.conjugation_dict['Futur II'],
+                                                     self.conjugation_dict['Futur I']))
 
     def extract_timeform(self, conjugation_table, timeform: str, index: int):
         conjugation = conjugation_table[index].split(', ')
@@ -105,6 +105,18 @@ class Verbforms:
                 engl_translation_html).group(1)
             # currently we just return the first of a list of possible translation, assuming this is the best matching choice
             return engl_translation.split(',')[0]
+        except IndexError:
+            return None
+
+    def parse_html_for_regularity(self):
+        try:
+            regularity_html = re.findall(r'</a> erfolgt .*. Die', self.verb_html)[0]
+            regularity_html = re.findall(r'</a> erfolgt .{11,13} ', self.verb_html)[0]
+            regularity = re.search('%s(.{10,12})%s' % ('</a> erfolgt ', '.'), regularity_html).group(1)
+            if regularity.startswith('unr'):
+                return False
+            else:
+                return True
         except IndexError:
             return None
 

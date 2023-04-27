@@ -1,7 +1,11 @@
 table {
-  width: 80%;
+  width: 100%;
 }
 
 th,td {
   text-align: left;
+}
+
+fieldset {
+  width: 500px;
 }

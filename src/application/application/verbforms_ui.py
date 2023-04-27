@@ -39,9 +39,9 @@ class TimeFormsCheckbox(FlaskForm):
     # todo: if time, make general form, by also including verb in form (currently separately handled, design could ev. be improved)
     praesens = BooleanField('Präsens')
     praeteritum = BooleanField('Präteritum')
-    imperativ = BooleanField('Imperativ, n.a.')
-    konjunktiv1 = BooleanField('Konjunktiv I, n.a.')
-    konjunktiv2 = BooleanField('Konjunktiv II, n.a.')
+    imperativ = BooleanField('Imperativ (n.a.)')
+    konjunktiv1 = BooleanField('Konjunktiv I (n.a.)')
+    konjunktiv2 = BooleanField('Konjunktiv II (n.a.)')
     perfekt = BooleanField('Perfekt')
     plusquamperfekt = BooleanField('Plusquamperfekt')
     futur1 = BooleanField('Futur I')
@@ -64,6 +64,8 @@ def verbforms_generator():
                                next_verb=current_app.config['verb'].verb.infinitive_german,
                                english_translation=current_app.config['verb'].verb.infinitive_english,
                                conjugation_table=current_app.config['verb'].verb.german_conjugations,
+                               language_level=current_app.config['verb'].verb.language_level,
+                               is_regular=current_app.config['verb'].verb.is_regular,
                                checkboxes=checkboxes)
     else:
         return render_template('verbforms_generator.html',
