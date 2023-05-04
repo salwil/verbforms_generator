@@ -27,9 +27,7 @@ class CsvFile:
         if not (os.path.exists(self.directory_path)):
             os.makedirs(self.directory_path)
         self.file_path = self.generate_name()
-        self.is_open = None
-        self.csvfile = self.open_file()
-        self.csv_writer = csv.writer(self.csvfile, delimiter='\t', quotechar='"')
+        #self.csvfile = None
 
     def generate_name(self):
         return self.directory_path \
@@ -69,14 +67,14 @@ class CsvFile:
         return list_of_records
 
     def write_record(self, verb: Verb, list_of_timeforms: list):
-        records = self.convert_verb_forms_to_csv_records(verb, list_of_timeforms)
-        for record in records:
-            self.csv_writer.writerow(record)
+        with open(self.file_path, 'a', newline='') as csvfile:
+            csv_writer = csv.writer(csvfile, delimiter='\t', quotechar='"')
+            records = self.convert_verb_forms_to_csv_records(verb, list_of_timeforms)
+            for record in records:
+                csv_writer.writerow(record)
 
     def open_file(self):
-        self.is_open = True
-        return open(self.file_path, 'w')
+        self.csvfile = open(self.file_path, "a", newline=' ')
 
     def close_file(self):
         self.csvfile.close()
-        self.is_open = False

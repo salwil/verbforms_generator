@@ -13,10 +13,6 @@ class VerbformsTest(unittest.TestCase):
         time.sleep(1)
         self.csv_file_2 = CsvFile()
 
-    def tearDown(self) -> None:
-        self.csv_file_1.close_file()
-        self.csv_file_2.close_file()
-
     def test_generate_name(self):
         print(self.csv_file_1.file_path)
         print(self.csv_file_2.file_path)
