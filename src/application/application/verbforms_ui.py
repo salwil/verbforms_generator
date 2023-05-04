@@ -52,7 +52,6 @@ class TimeFormsCheckbox(FlaskForm):
 def welcome():
     #todo: find out how csv_file_for_verbs can be re-initialized
     current_app.config['verb_file'] = CsvFile()
-    current_app.config['verb_file'].open_file()
     # initialize Lemmatizer here, so that we do not have to load it for every verb again
     current_app.config['lemmatizer'] = GermanLemmatizer()
     return render_template('welcome.html')
@@ -100,13 +99,14 @@ def add_verb_to_list():
                            is_regular=current_app.config['verb'].verb.is_regular,
                            checkboxes=checkboxes)
 
+@app.route('/verbforms_generator/generate')
+def generate_artefacts():
+    return render_template('download.html')
+
+
 @app.route('/verbforms_generator/download')
 def download_file_with_verbs():
-    if current_app.config['verb_file'].is_open:
-        current_app.config['verb_file'].close_file()
-        return render_template('download.html')
-    else:
-        return send_file(current_app.config['verb_file'].file_path)
+    return send_file(current_app.config['verb_file'].file_path)
 
 
 @app.route('/verbforms_generator/goodbye')
