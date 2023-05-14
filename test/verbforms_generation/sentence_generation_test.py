@@ -1,10 +1,8 @@
 import unittest
-from datetime import datetime
 
 from src.verbforms_generation.verbforms_generation.sentence_generation import SentenceGenerator
 
 generator = SentenceGenerator()
-
 
 class TranslationTest(unittest.TestCase):
 

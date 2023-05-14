@@ -64,8 +64,6 @@ def welcome():
     # initialize Lemmatizer here, so that we do not have to load it for every verb again
     current_app.config['lemmatizer'] = GermanLemmatizer()
     radio = SentenceFormRadio()
-    # current_app.config['sentence_generator'] = SentenceGenerator()
-    # current_app.config['translator'] = TranslatorEnDe()
     return render_template('welcome.html', radio=radio)
 
 
