@@ -9,6 +9,9 @@
 <form action="/verbforms_generator" method="post">
     <label for="next_verb">Verb in any form: </label>
     <input type="text" name="next_verb" value="" required>
+    <br>
+    {{ radio.sample_sentence.label }} <br> {{ radio.sample_sentence() }}
+    <br>
     <input type="submit" value="Submit">
 </form>
 </body>

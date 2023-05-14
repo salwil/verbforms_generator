@@ -24,4 +24,6 @@ class Verb:
     german_conjugations: list = field(init=True)
     # english_conjugations: list = field(init=True)
     language_level: str = field(init=True, repr=True)
+    sample_sentence_english: str = field(init=False)
+    sample_sentence_german: str = field(init=False)
     is_regular: bool = field(repr=True, default=True)

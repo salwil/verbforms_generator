@@ -19,6 +19,9 @@
         </tr>
     </table>
 </fieldset>
+{% if generated_sentence %}
+<h3>Sample Sentence: {{ generated_sentence }}</h3>
+{% endif %}
 <!--<h2>German conjugation table:</h2>
 <fieldset>
     <table>
@@ -41,6 +44,7 @@
           {% endfor %}
         </tr>
     </table>-->
+
 <h3>Which forms would you like to export?</h3>
 <form action="/verbforms_generator/add" method="post">
     <p>
@@ -75,6 +79,10 @@
     <form action="/verbforms_generator" method="post">
         <label for="next_verb">Enter another verb you want to conjugate: </label>
         <input type="text" name="next_verb" value="" required>
+        <br>
+        <br>
+        {{ radio.sample_sentence.label }} <br> {{ radio.sample_sentence() }}
+        <br>
         <input type="submit" value="Submit">
     </form>
     <p>
