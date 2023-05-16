@@ -88,7 +88,7 @@ class CSVExport:
         print(obj)
         return obj
 
-    def add_notes(self, deck_name="verbforms4", action="addNotes", version=2):
+    def add_notes(self, deck_name="verbforms4", action="addNotes", version=6):
         """wrapping function to generate new anki cards directly form a CSVfile"""
         try:
             #self.invoke('createDeck', deck=deck_name)
