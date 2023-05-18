@@ -22,6 +22,7 @@ class Verb:
     infinitive_german: str = field(init=True, repr=True)
     infinitive_english: str = field(init=True, repr=True)
     german_conjugations: list = field(init=True)
-    # english_conjugations: list = field(init=True)
     language_level: str = field(init=True, repr=True)
+    sample_sentence_english: str = field(init=False, default=None)
+    sample_sentence_german: str = field(init=False, default=None)
     is_regular: bool = field(repr=True, default=True)

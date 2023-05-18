@@ -136,10 +136,14 @@ class Verbforms:
                 r'.*</span></dd></dl><dl class="vNrn"><dd lang="ru">',
                 self.verb_html)[0]
         except IndexError:
-            engl_translation_html = re.findall(
-                r'title="Englisch" alt="Englisch"src="/bedeutungenweb/en.svg" width="13" height="13">&nbsp;</span><span>'
-                r'.*</span></dd></dl><dl class="vNrn"><dd lang="es">'
-                , self.verb_html)[0]
+            try:
+                engl_translation_html = re.findall(
+                    r'title="Englisch" alt="Englisch"src="/bedeutungenweb/en.svg" width="13" height="13">&nbsp;</span><span>'
+                    r'.*</span></dd></dl><dl class="vNrn"><dd lang="es">'
+                    , self.verb_html)[0]
+            except IndexError:
+                return 'Unknown'
+
         try:
             engl_translation = re.search(
                 '%s(.*)%s' % ('title="Englisch" alt="Englisch"src="/bedeutungenweb/en.svg" '
