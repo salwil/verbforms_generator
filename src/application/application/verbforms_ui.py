@@ -68,20 +68,29 @@ def welcome():
 
 @app.route('/verbforms_generator', methods=['POST'])
 def verbforms_generator():
-    verb = request.form['next_verb']
-    current_app.config['verb'] = Verbforms(verb, current_app.config['lemmatizer'])
     checkboxes = TimeFormsCheckbox()
     radio = SentenceFormRadio()
-    if radio.sample_sentence.data == 'yes':
-        # current_app.config['verb'].verb.sample_sentence = 'Hallo, hier bin ich!'
-        try:
-            current_app.config['verb'].verb.sample_sentence_german = current_app.config['sentence_generator'] \
-                .generate(current_app.config['verb'].verb.german_conjugations)
-        except KeyError:
-            current_app.config['sentence_generator'] = SentenceGenerator()
-            current_app.config['verb'].verb.sample_sentence_german = current_app.config['sentence_generator'] \
-                .generate(current_app.config['verb'].verb.german_conjugations)
+    verb = request.form['next_verb']
+    current_app.config['verb'] = Verbforms(verb, current_app.config['lemmatizer'])
     if current_app.config['verb'].verb:
+        if radio.sample_sentence.data == 'yes':
+            try:
+                print('try')
+                print(current_app.config['verb'].verb.german_conjugations)
+                current_app.config['verb'].verb.sample_sentence_german = current_app.config['sentence_generator'] \
+                    .generate(current_app.config['verb'].verb.german_conjugations)
+            except KeyError:
+                print('except')
+                print(current_app.config['verb'].verb.german_conjugations)
+                current_app.config['sentence_generator'] = SentenceGenerator()
+                current_app.config['verb'].verb.sample_sentence_german = current_app.config['sentence_generator'] \
+                    .generate(current_app.config['verb'].verb.german_conjugations)
+        else:
+            try:
+                generated_sentence = current_app.config['verb'].verb.sample_sentence_german = None
+            except AttributeError:
+                generated_sentence = None
+        # if current_app.config['verb'].verb:
         return render_template('verbforms_generator.html',
                                next_verb=current_app.config['verb'].verb.infinitive_german,
                                english_translation=current_app.config['verb'].verb.infinitive_english,
@@ -95,13 +104,17 @@ def verbforms_generator():
         return render_template('verbforms_generator.html',
                                next_verb=None,
                                english_translation=None,
-                               conjugation_table=None)
+                               conjugation_table=None,
+                               checkboxes=checkboxes,
+                               radio=radio,
+                               )
 
 
 @app.route('/verbforms_generator/add', methods=['POST'])
 def add_verb_to_list():
     current_app.config['verb_file']
     checkboxes = TimeFormsCheckbox()
+    radio = SentenceFormRadio()
     # current list of timeforms in verbforms.py: ['Präsens', 'Präteritum', 'Perfekt', 'Plusquamperfekt', 'Futur I', 'Futur II', 'Konjunktiv Präsens', 'Konjunktiv Präteritum']
     list_of_timeforms = [checkboxes.praesens.data,
                          checkboxes.praeteritum.data,
@@ -121,7 +134,13 @@ def add_verb_to_list():
                            language_level=current_app.config['verb'].verb.language_level,
                            is_regular=current_app.config['verb'].verb.is_regular,
                            checkboxes=checkboxes,
-                           generated_sentence=current_app.config['verb'].verb.sample_sentence_english)
+                           radio=radio,
+                           generated_sentence=current_app.config['verb'].verb.sample_sentence_german)
+
+
+@app.route('/verbforms_generator/generate')
+def generate_artefacts():
+    return render_template('download.html')
 
 
 @app.route('/verbforms_generator/generate')

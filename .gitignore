@@ -9,3 +9,4 @@ dist/
 index_cards/
 translation.py
 translation_test.py
+src/verbforms_generation/verbforms_generation/try_anki_export.py

@@ -90,6 +90,12 @@ class VerbformsTest(unittest.TestCase):
     def test_build_verb_object_with_nonverb(self):
         verbforms_nonverb = Verbforms("Hallo", lemmatizer)
         self.assertEqual(None, verbforms_nonverb.verb)
+        verbforms_nonverb = Verbforms("plus", lemmatizer)
+        self.assertEqual(None, verbforms_nonverb.verb)
+
+    def test_build_verb_object_with_verb_without_english_infinitive(self):
+        verbforms_nonverb = Verbforms("schnell", lemmatizer)
+        self.assertEqual('Unknown', verbforms_nonverb.verb.infinitive_english)
 
     def test_input_that_needs_lemmatization(self):
         verbforms_gewesen = Verbforms("gewesen", lemmatizer)

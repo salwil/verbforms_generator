@@ -24,15 +24,15 @@ class SentenceGenerator:
         checkpoint = "dbmdz/german-gpt2"
         self.tokenizer = AutoTokenizer.from_pretrained(checkpoint)
         self.model = AutoModelWithLMHead.from_pretrained(checkpoint)
-        self.valid_sentence = False
-        # English sentence generation:
 
     def generate(self, conjugation_table: list, nr_of_tokens: int = 15):
-        while (not self.valid_sentence):
+        valid_sentence = False
+        while (not valid_sentence):
             verbform = random.choice(conjugation_table)
             indx = random.choice(range(0, 1))
             input = verbform[indx].replace('(', '')
             input = input.replace(')', '')
+            print(input)
             pipe = pipeline('text-generation', model="dbmdz/german-gpt2",
                             tokenizer="dbmdz/german-gpt2")
             text = pipe(input, max_length=nr_of_tokens)[0]["generated_text"]
@@ -41,7 +41,6 @@ class SentenceGenerator:
             sentence_as_list = sentence[0].split(' ')
             print(sentence_as_list)
             if len(sentence_as_list) > 3:
-                self.valid_sentence = True
+                valid_sentence = True
             sentence_as_list[0] = sentence_as_list[0].capitalize()
         return ' '.join(sentence_as_list) + '.'
-
