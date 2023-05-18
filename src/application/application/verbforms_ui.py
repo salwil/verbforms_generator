@@ -143,11 +143,6 @@ def generate_artefacts():
     return render_template('download.html')
 
 
-@app.route('/verbforms_generator/generate')
-def generate_artefacts():
-    return render_template('download.html')
-
-
 @app.route('/verbforms_generator/download')
 def download_file_with_verbs():
     return send_file(current_app.config['verb_file'].file_path)
