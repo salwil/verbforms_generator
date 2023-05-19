@@ -130,7 +130,7 @@ body {
   color: rgba(0, 0, 0, 0.8);
   font-size: 16px;
 }
-.right-container .pets-weight .radio-container {
+.right-container .checkbox-container .radio-container {
   display: flex;
   justify-content: space-between;
   width: 100%;
@@ -141,6 +141,16 @@ body {
   display: grid;
   padding: 5px 40px;
 }
+
+.right-container input {
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  height: 38px;
+  line-height: 38px;
+  width: 100px;
+  border-radius: 19px;
+  font-family: "Montserrat", sans-serif;
+}
+
 .right-container footer button {
   border: 1px solid rgba(0, 0, 0, 0.2);
   height: 38px;
@@ -153,6 +163,7 @@ body {
   background: #fff;
   transition: 0.2s all ease-in-out;
 }
+
 .right-container footer #back:hover {
   background: #171a2b;
   color: white;
@@ -166,17 +177,37 @@ body {
   background: #171a2b;
 }
 
+.right-container #submit {
+  background: #807182;
+  border: 1px solid transparent;
+  color: #fff;
+}
+.right-container #submit:hover {
+  background: #171a2b;
+}
+
+.right-container download-link #download {
+  background: #807182;
+  border: 1px solid transparent;
+  color: #fff;
+}
+.right-container download-link #download:hover {
+  background: #171a2b;
+}
+
 .next_verb label,
 .pets-breed label,
 .pets-birthday label,
+.attributes-table label,
+.next-actions,
 .sample_sentence label,
 .pets-spayed-neutered label,
-.pets-weight label {
+.verb-forms label {
   display: block;
   margin-bottom: 5px;
 }
 
-.radio-container {
+.radio-container .checkbox-container {
   background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 4px;
@@ -197,12 +228,34 @@ body {
   transition: 0.2s all ease-in-out;
   width: 80px;
 }
+.checkbox-container label {
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  display: inline-block;
+  height: 26px;
+  line-height: 26px;
+  margin: 5px;
+  padding: 0;
+  text-align: center;
+  transition: 0.2s ease-in-out;
+  width: 115px;
+}
 
 .radio-container input[type=radio] {
   display: none;
 }
 
+.checkbox-container input[type=checkbox] {
+  display: none;
+}
+
 .radio-container input[type=radio]:checked + label {
+  background: #f7b1ab;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+}
+
+.checkbox-container input[type=checkbox]:checked + label {
   background: #f7b1ab;
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
