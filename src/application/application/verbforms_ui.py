@@ -39,8 +39,9 @@ app_ctx.push()
 
 
 class TimeFormsCheckbox(FlaskForm):
-    # todo: if time, make general form, by also including verb in form (currently separately handled, design could ev. be improved)
-    praesens = BooleanField('Präsens', default=True, render_kw={'checked':''})
+    # todo: if time, make general form, by also including verb in form
+    #  (currently separately handled, design could ev. be improved)
+    praesens = BooleanField('Präsens', default=True, render_kw={'checked': ''})
     praeteritum = BooleanField('Präteritum')
     imperativ = BooleanField('Imperativ (n.a.)')
     konjunktiv1 = BooleanField('Konjunktiv I')
@@ -148,8 +149,9 @@ def download_file_with_verbs():
     try:
         return send_file(current_app.config['verb_file'].file_path)
     except FileNotFoundError:
+        # todo: alert if no verbs have been added to the file doesn't work yet
         flash('You have not added any verb to your file so far.')
-    #checkboxes = TimeFormsCheckbox()
+    # checkboxes = TimeFormsCheckbox()
     radio = SentenceFormRadio()
     return render_template('welcome.html', radio=radio)
     '''
@@ -162,6 +164,7 @@ def download_file_with_verbs():
                            checkboxes=checkboxes,
                            radio=radio,
                            generated_sentence=current_app.config['verb'].verb.sample_sentence_german)'''
+
 
 @app.route('/verbforms_generator/goodbye')
 def goodbye():

@@ -1,3 +1,4 @@
+<!-- template from https://codepen.io/rickyeckhardt/pen/oNXeoZp */ -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,12 +18,11 @@
   </div>
   <div class='right-container'>
     <header>
-      <h1>Please enter the verb you want to conjugate below</h1>
+      <h3>Please enter the verb you want to conjugate below</h3>
       <form action="/verbforms_generator" method="post">
       <div class='set'>
         <div class='next_verb'>
-          <label for='next_verb'>Verb</label>
-          <input type="text" name="next_verb" value="" required>
+          <input type="text" name="next_verb" value="" required placeholder="Enter any verb">
           <!--<input id='next_verb' placeholder="Verb in any form" type='text' value="" required>-->
         </div>
       </div>
@@ -44,7 +44,11 @@
     </header>
     <footer>
       <div class='set'>
-        <input type="submit" value="Submit" id='submit'>
+        <div>
+          <!-- empty div so that submit button appears on the right side-->
+        </div>
+        <button type="submit" id="submit">Submit</button>
+        <!--<input type="submit" value="Submit" id='submit'>-->
       </div>
     </footer>
     </form>

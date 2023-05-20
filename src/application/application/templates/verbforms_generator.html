@@ -1,3 +1,4 @@
+<!-- template from https://codepen.io/rickyeckhardt/pen/oNXeoZp */ -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -62,8 +63,7 @@
                 <form action="/verbforms_generator" method="post">
                     <div class='set'>
                         <div class='next_verb'>
-                            <label for='next_verb'>Enter another verb</label>
-                            <input type="text" name="next_verb" value="" required>
+                            <input type="text" name="next_verb" value="" required placeholder="Enter another verb">
                             <!--<input id='next_verb' placeholder="Verb in any form" type='text' value="" required>-->
                         </div>
                         <div class='sample_sentence'>
@@ -78,24 +78,17 @@
                             </div>
                         </div>
                     </div>
-                    <div class='set'>
-                        <input type="submit" value="Submit" id='submit'>
-                    </div>
-                </form>
-                <div class='set'>
-                    <div class="container" align="left">
-                        ... or download the file with all the verb conjugations:
-                        <br>
-                        <!-- todo: change this to link to the goodbye page and from there the file can be downloaded -->
-                        <a href="/verbforms_generator/download" target="blank">
-                            <input type="submit" value="Download" id='download'>
-                        </a>
-                    </div>
-                </div>
             </div>
         </header>
         <footer>
-
+                <div class='set' align="right">
+                        <button type="submit" id="submit">Submit</button>
+                </form>
+                    <!-- todo: change this to link to the goodbye page and from there the file can be downloaded -->
+                    <a href="/verbforms_generator/download" target="blank">
+                        <button type="submit" id="download">Download CSV</button>
+                    </a>
+                </div>
         </footer>
 
     </div>
