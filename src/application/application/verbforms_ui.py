@@ -53,7 +53,7 @@ class TimeFormsCheckbox(FlaskForm):
 
 
 class SentenceFormRadio(FlaskForm):
-    sample_sentence = RadioField('Generate sample sentence?', coerce=str, choices=[('no', 'No'), ('yes', 'Yes')],
+    sample_sentence = RadioField('Sample sentence?', coerce=str, choices=[('no', 'No'), ('yes', 'Yes')],
                                  default='no')
 
 

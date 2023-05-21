@@ -61,7 +61,7 @@ body {
 }
 .left-container .anki {
   bottom: -5px;
-  position: absolute;
+  /*position: absolute;*/
   text-align: center;
 }
 .left-container .anki:before {
@@ -114,12 +114,8 @@ body {
 .right-container .pets-photo {
   width: 176px;
 }
-.right-container .pets-photo {
-  align-items: center;
-  display: grid;
-  grid-template-areas: ". .";
-}
-.right-container .pets-photo button {
+
+.right-container button {
   border: none;
   border-radius: 50%;
   height: 38px;
@@ -127,7 +123,7 @@ body {
   outline: none;
   width: 38px;
 }
-.right-container .pets-photo button i {
+.right-container button i {
   color: rgba(0, 0, 0, 0.8);
   font-size: 16px;
 }
@@ -141,15 +137,6 @@ body {
   background: #fff;
   display: grid;
   padding: 5px 40px;
-}
-
-.right-container input #submit #download {
-  border: 1px solid rgba(0, 0, 0, 0.2);
-  height: 38px;
-  line-height: 38px;
-  width: 100px;
-  border-radius: 19px;
-  font-family: "Montserrat", sans-serif;
 }
 
 .right-container footer button {
@@ -170,24 +157,6 @@ body {
   font-family: "Montserrat", sans-serif;
 }
 
-.right-container footer #back {
-  background: #fff;
-  transition: 0.2s all ease-in-out;
-}
-
-.right-container footer #back:hover {
-  background: #171a2b;
-  color: white;
-}
-.right-container footer #next {
-  background: #807182;
-  border: 1px solid transparent;
-  color: #fff;
-}
-.right-container footer #next:hover {
-  background: #171a2b;
-}
-
 .right-container #submit {
   background: #807182;
   border: 1px solid transparent;
@@ -206,27 +175,23 @@ body {
   background: #171a2b;
 }
 
-.right-container download-link #download {
-  background: #807182;
-  border: 1px solid transparent;
-  color: #fff;
-}
-.right-container download-link #download:hover {
-  background: #171a2b;
-}
-
-.pets-breed label,
-.pets-birthday label,
 .attributes-table label,
 .next-actions,
 .sample_sentence label,
-.pets-spayed-neutered label,
 .verb-forms label {
   display: block;
   margin-bottom: 5px;
 }
 
-.radio-container .checkbox-container {
+.radio-container {
+  background: #fff;
+  border: 1px solid rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+  display: inline-block;
+  padding: 5px;
+}
+
+.checkbox-container {
   background: #fff;
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 4px;
@@ -249,6 +214,7 @@ body {
 }
 .checkbox-container label {
   background: transparent;
+  border: 1px solid transparent;
   border: 1px solid transparent;
   border-radius: 2px;
   display: inline-block;
@@ -280,3 +246,15 @@ body {
 }
 
 radio-container.inlineLabels ul {list-style:none}
+
+.authors {
+  position:absolute;
+  width:100%;
+  bottom:0;
+  left:0;
+  text-align: right;
+  font-size: 12px;
+  background: #fff;
+  /*display: grid;*/
+  padding: 12px 12px;
+}

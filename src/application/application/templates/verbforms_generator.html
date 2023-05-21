@@ -32,13 +32,18 @@
                 </div>
                 <br>
                 {% if generated_sentence %}
+                <div class='generated_sentence'>
+                    <h4>Sample Sentence:</h4>
+                </div>
                 <div class="generated_sentence">
-                    <h4>Sample Sentence: </h4> {{ generated_sentence }}
+                    {{ generated_sentence }}
                 </div>
                 <br>
                 {% endif %}
             </div>
-            <h4>Which forms would you like to export?</h4>
+            <div class='verb-forms'>
+                <h4>Which forms would you like to export?</h4>
+            </div>
             <div class='verb-forms'>
                 <form action="/verbforms_generator/add" method="post">
                     <div class='checkbox-container'>
@@ -60,7 +65,7 @@
             </div>
             <br>
             <div class='next-actions'>
-                <h4>What to do next</h4>
+                <h4>What you can do next</h4>
             </div>
             {% endif %}
             <div class='next-actions'>
@@ -71,7 +76,6 @@
                             <!--<input id='next_verb' placeholder="Verb in any form" type='text' value="" required>-->
                         </div>
                         <div class='sample_sentence'>
-                            {{ radio.sample_sentence.label }}
                             <div class='radio-container'>
                                 {% for subfield in radio.sample_sentence %}
                                 <tr>
@@ -80,6 +84,7 @@
                                 </tr>
                                 {% endfor %}
                             </div>
+                            {{ radio.sample_sentence.label }}
                         </div>
                     </div>
             </div>
@@ -94,8 +99,12 @@
                     </a>
                 </div>
         </footer>
-
     </div>
 </div>
 </body>
+<div class="authors">
+    <footer>
+    Authors: Jana Hofman, Salome Wildermuth <br> CSS, HTML templates: https://codepen.io/
+</footer>
+</div>
 </html>
