@@ -21,7 +21,7 @@ Institute for Computational Linguistics
 
 import logging
 
-from flask import Flask, render_template, request, send_file, current_app
+from flask import Flask, render_template, request, send_file, current_app, flash
 from flask_wtf import FlaskForm
 from wtforms import BooleanField, RadioField
 
@@ -39,12 +39,13 @@ app_ctx.push()
 
 
 class TimeFormsCheckbox(FlaskForm):
-    # todo: if time, make general form, by also including verb in form (currently separately handled, design could ev. be improved)
-    praesens = BooleanField('Präsens')
+    # todo: if time, make general form, by also including verb in form
+    #  (currently separately handled, design could ev. be improved)
+    praesens = BooleanField('Präsens', default=True, render_kw={'checked': ''})
     praeteritum = BooleanField('Präteritum')
     imperativ = BooleanField('Imperativ (n.a.)')
-    konjunktiv1 = BooleanField('Konjunktiv Präsens')
-    konjunktiv2 = BooleanField('Konjunktiv Präteritum')
+    konjunktiv1 = BooleanField('Konjunktiv I')
+    konjunktiv2 = BooleanField('Konjunktiv II')
     perfekt = BooleanField('Perfekt')
     plusquamperfekt = BooleanField('Plusquamperfekt')
     futur1 = BooleanField('Futur I')
@@ -52,7 +53,7 @@ class TimeFormsCheckbox(FlaskForm):
 
 
 class SentenceFormRadio(FlaskForm):
-    sample_sentence = RadioField('Generate sample sentence?', coerce=str, choices=[('no', 'No'), ('yes', 'Yes')],
+    sample_sentence = RadioField('Sample sentence:', coerce=str, choices=[('no', 'No'), ('yes', 'Yes')],
                                  default='no')
 
 
@@ -143,14 +144,26 @@ def generate_artefacts():
     return render_template('download.html')
 
 
-@app.route('/verbforms_generator/generate')
-def generate_artefacts():
-    return render_template('download.html')
-
-
 @app.route('/verbforms_generator/download')
 def download_file_with_verbs():
-    return send_file(current_app.config['verb_file'].file_path)
+    try:
+        return send_file(current_app.config['verb_file'].file_path)
+    except FileNotFoundError:
+        # todo: alert if no verbs have been added to the file doesn't work yet
+        flash('You have not added any verb to your file so far.')
+    # checkboxes = TimeFormsCheckbox()
+    radio = SentenceFormRadio()
+    return render_template('welcome.html', radio=radio)
+    '''
+    return render_template('verbforms_generator.html',
+                           next_verb=current_app.config['verb'].verb.infinitive_german,
+                           english_translation=current_app.config['verb'].verb.infinitive_english,
+                           conjugation_table=current_app.config['verb'].verb.german_conjugations,
+                           language_level=current_app.config['verb'].verb.language_level,
+                           is_regular=current_app.config['verb'].verb.is_regular,
+                           checkboxes=checkboxes,
+                           radio=radio,
+                           generated_sentence=current_app.config['verb'].verb.sample_sentence_german)'''
 
 
 @app.route('/verbforms_generator/goodbye')

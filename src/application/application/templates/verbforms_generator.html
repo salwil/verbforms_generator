@@ -1,3 +1,4 @@
+<!-- template from https://codepen.io/rickyeckhardt/pen/oNXeoZp */ -->
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,95 +7,105 @@
     <link rel="stylesheet" type="text/css" href="../static/stylesheets/stylesheet.css">
 </head>
 <body>
-{% if next_verb %}
-<h3>You entered a form of the German verb <i>{{ next_verb }}</i>. The English translation of <i>{{ next_verb }}</i> is
-    <i>to {{ english_translation }}</i>.</h3>
-<fieldset>
-    <table>
-        <th>Language Level</th>
-        <th>Regular</th>
-        <tr>
-            <td>{{ language_level }}</td>
-            <td> {% if is_regular %} Yes {% else %} No {% endif %}</td>
-        </tr>
-    </table>
-</fieldset>
-{% if generated_sentence %}
-<h3>Sample Sentence: {{ generated_sentence }}</h3>
-{% endif %}
-<!--<h2>German conjugation table:</h2>
-<fieldset>
-    <table>
-        <th>Präsens</th>
-        <th>Präteritum</th>
-        <th>Perfekt</th>
-        <th>Plusquamperfekt</th>
-        <th>Futur I</th>
-        <th>Futur II</th>
-        <tr>
-          {% for praesens, praeteritum, perfekt, plusquamperfekt, konjunktiv_praesens, konjunktiv_praeteritum, futur2, futur1 in conjugation_table %}
-            <tr>
-                <td>{{ praesens }} </td>
-                <td>{{ praeteritum }} </td>
-                <td>{{ perfekt }} </td>
-                <td>{{ plusquamperfekt }} </td>
-                <td>{{ futur1 }} </td>
-                <td>{{ futur2 }} </td>
-            </tr>
-          {% endfor %}
-        </tr>
-    </table>-->
-
-<h3>Which forms would you like to export?</h3>
-<form action="/verbforms_generator/add" method="post">
-    <p>
-        {{ checkboxes.praesens() }} {{ checkboxes.praesens.label }}
-        {{ checkboxes.praeteritum() }} {{ checkboxes.praeteritum.label }}
-        {{ checkboxes.imperativ() }} {{ checkboxes.imperativ.label }}
-        {{ checkboxes.perfekt() }} {{ checkboxes.perfekt.label }}
-        {{ checkboxes.plusquamperfekt() }} {{ checkboxes.plusquamperfekt.label }}
-        {{ checkboxes.futur1() }} {{ checkboxes.futur1.label }}
-        {{ checkboxes.futur2() }} {{ checkboxes.futur2.label }}
-        {{ checkboxes.konjunktiv1() }} {{ checkboxes.konjunktiv1.label }}
-        {{ checkboxes.konjunktiv2() }} {{ checkboxes.konjunktiv2.label }}
-    </p>
-    <!--{% if checkboxes.praesens.errors %}
-        <ul class="errors">
-            {% for error in checkboxes.praesens.errors %}
-                <li>{{ error }}</li>
-            {% endfor %}
-        </ul>
-    {% endif %}-->
-
-    <input type="submit" value="Add this verb to my Anki list">
-</form>
-</fieldset>
-<br>
-<br>
-<fieldset>
-    <h3>What to do next</h3>
-    {% else %}
-    <h3>We could not find the verb you entered.</h3>
-    {% endif %}
-    <form action="/verbforms_generator" method="post">
-        <label for="next_verb">Enter another verb you want to conjugate: </label>
-        <input type="text" name="next_verb" value="" required>
-        <br>
-        <br>
-        {{ radio.sample_sentence.label }} <br> {{ radio.sample_sentence() }}
-        <br>
-        <input type="submit" value="Submit">
-    </form>
-    <p>
-    <div class="container" align="left">
-        ... or download the file with all the verb conjugations:
-        <br>
-        <!-- todo: change this to link to the goodbye page and from there the file can be downloaded -->
-        <a href="/verbforms_generator/generate" target="blank">
-            <button>Download verbforms</button>
-        </a>
+<div class='form-container'>
+    <div class='left-container'>
+        {% if next_verb %}
+        <h3>You entered a form of the German verb <i>{{ next_verb }}</i>.
+            <br><br>The English translation of <i>{{ next_verb }}</i> is <i>to {{ english_translation }}</i>.</h3>
+        {% else %}
+        <h3>We could not find the verb you entered.</h3>
+        {% endif %}
     </div>
-    </p>
-</fieldset>
+    <div class='right-container'>
+        <header>
+            {% if next_verb %}
+            <div class="'set">
+                <div class='attributes-table'>
+                    <table>
+                        <th>Language Level</th>
+                        <th>Regular</th>
+                        <tr>
+                            <td>{{ language_level }}</td>
+                            <td> {% if is_regular %} Yes {% else %} No {% endif %}</td>
+                        </tr>
+                    </table>
+                </div>
+                <br>
+                {% if generated_sentence %}
+                <div class='generated_sentence'>
+                    <h4>Sample Sentence:</h4>
+                </div>
+                <div class="set">
+                    {{ generated_sentence }}
+                </div>
+                <br>
+                {% endif %}
+            </div>
+            <div class='verb-forms'>
+                <h4>Which forms would you like to export?</h4>
+            </div>
+            <div class='verb-forms'>
+                <form action="/verbforms_generator/add" method="post">
+                    <div class='checkbox-container'>
+                        {{ checkboxes.praesens() }} {{ checkboxes.praesens.label }}
+                        {{ checkboxes.praeteritum() }} {{ checkboxes.praeteritum.label }}
+                        {{ checkboxes.perfekt() }} {{ checkboxes.perfekt.label }}
+                        {{ checkboxes.plusquamperfekt() }} {{ checkboxes.plusquamperfekt.label }}
+                        {{ checkboxes.futur1() }} {{ checkboxes.futur1.label }}
+                        {{ checkboxes.futur2() }} {{ checkboxes.futur2.label }}
+                        {{ checkboxes.konjunktiv1() }} {{ checkboxes.konjunktiv1.label }}
+                        {{ checkboxes.konjunktiv2() }} {{ checkboxes.konjunktiv2.label }}
+                    </div>
+                    <div class="set">
+                        <div></div>
+                        <button type="submit" id="add">Add these forms to my Anki list</button>
+                    </div>
+                    <!--<input type="submit" value="Add this verb to my Anki list">-->
+                </form>
+            </div>
+            <br>
+            <div class='next-actions'>
+                <h4>What you can do next</h4>
+            </div>
+            {% endif %}
+            <div class='next-actions'>
+                <form action="/verbforms_generator" method="post">
+                    <div class='set'>
+                        <div class='next_verb'>
+                            <input type="text" name="next_verb" value="" required placeholder="Enter another verb">
+                            <!--<input id='next_verb' placeholder="Verb in any form" type='text' value="" required>-->
+                        </div>
+                        <div class='sample_sentence'>
+                            {{ radio.sample_sentence.label }}
+                            <div class='radio-container'>
+                                {% for subfield in radio.sample_sentence %}
+                                <tr>
+                                    <td>{{ subfield }}</td>
+                                    <td>{{ subfield.label }}</td>
+                                </tr>
+                                {% endfor %}
+                            </div>
+                        </div>
+                    </div>
+            </div>
+        </header>
+        <footer>
+            <div class='set' align="right">
+                <button type="submit" id="submit">Submit</button>
+                </form>
+                <!-- todo: change this to link to the goodbye page and from there the file can be downloaded -->
+                <a href="/verbforms_generator/download" target="blank">
+                    <button type="submit" id="download">Download CSV</button>
+                </a>
+                </a>
+            </div>
+        </footer>
+    </div>
+</div>
 </body>
+<div class="authors">
+    <footer>
+        Authors: Jana Hofman, Salome Wildermuth <br> CSS, HTML Templates: https://codepen.io/
+    </footer>
+</div>
 </html>
