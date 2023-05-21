@@ -35,7 +35,7 @@
                 <div class='generated_sentence'>
                     <h4>Sample Sentence:</h4>
                 </div>
-                <div class="generated_sentence">
+                <div class="set">
                     {{ generated_sentence }}
                 </div>
                 <br>
@@ -76,6 +76,7 @@
                             <!--<input id='next_verb' placeholder="Verb in any form" type='text' value="" required>-->
                         </div>
                         <div class='sample_sentence'>
+                            {{ radio.sample_sentence.label }}
                             <div class='radio-container'>
                                 {% for subfield in radio.sample_sentence %}
                                 <tr>
@@ -84,27 +85,27 @@
                                 </tr>
                                 {% endfor %}
                             </div>
-                            {{ radio.sample_sentence.label }}
                         </div>
                     </div>
             </div>
         </header>
         <footer>
-                <div class='set' align="right">
-                        <button type="submit" id="submit">Submit</button>
+            <div class='set' align="right">
+                <button type="submit" id="submit">Submit</button>
                 </form>
-                    <!-- todo: change this to link to the goodbye page and from there the file can be downloaded -->
-                    <a href="/verbforms_generator/download" target="blank">
-                        <button type="submit" id="download">Download CSV</button>
-                    </a>
-                </div>
+                <!-- todo: change this to link to the goodbye page and from there the file can be downloaded -->
+                <a href="/verbforms_generator/download" target="blank">
+                    <button type="submit" id="download">Download CSV</button>
+                </a>
+                </a>
+            </div>
         </footer>
     </div>
 </div>
 </body>
 <div class="authors">
     <footer>
-    Authors: Jana Hofman, Salome Wildermuth <br> CSS, HTML templates: https://codepen.io/
-</footer>
+        Authors: Jana Hofman, Salome Wildermuth <br> CSS, HTML Templates: https://codepen.io/
+    </footer>
 </div>
 </html>

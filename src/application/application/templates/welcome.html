@@ -7,57 +7,57 @@
     <link rel="stylesheet" type="text/css" href="../static/stylesheets/stylesheet.css">
 </head>
 <body>
-  <div class='form-container'>
-  <div class='left-container'>
-    <h1>
-      VERBFORMS GENERATOR<br>FOR ANKI
-    </h1>
-    <div class='anki'>
-      <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Anki-icon.svg/1024px-Anki-icon.svg.png'>
+<div class='form-container'>
+    <div class='left-container'>
+        <h1>
+            VERBFORMS GENERATOR<br>FOR ANKI
+        </h1>
+        <div class='anki'>
+            <img src='https://upload.wikimedia.org/wikipedia/commons/thumb/3/3d/Anki-icon.svg/1024px-Anki-icon.svg.png'>
+        </div>
     </div>
-  </div>
-  <div class='right-container'>
-    <header>
-      <h3>Please enter the verb you want to conjugate below</h3>
-      <form action="/verbforms_generator" method="post">
-      <div class='set'>
-        <div class='next_verb'>
-          <input type="text" name="next_verb" value="" required placeholder="Enter any verb">
-          <!--<input id='next_verb' placeholder="Verb in any form" type='text' value="" required>-->
-        </div>
-      </div>
-      <div class='set'>
-        <div class='sample_sentence'>
-          {{ radio.sample_sentence.label }}
-          <div class='radio-container'>
-             {% for subfield in radio.sample_sentence %}
-            <tr>
-            <td>{{ subfield }}</td>
-            <td>{{ subfield.label }}</td>
+    <div class='right-container'>
+        <header>
+            <h3>Please enter the verb you want to conjugate below</h3>
+            <form action="/verbforms_generator" method="post">
+                <div class='set'>
+                    <div class='next_verb'>
+                        <input type="text" name="next_verb" value="" required placeholder="Enter any verb">
+                        <!--<input id='next_verb' placeholder="Verb in any form" type='text' value="" required>-->
+                    </div>
+                </div>
+                <div class='set'>
+                    <div class='sample_sentence'>
+                        {{ radio.sample_sentence.label }}
+                        <div class='radio-container'>
+                            {% for subfield in radio.sample_sentence %}
+                            <tr>
+                                <td>{{ subfield }}</td>
+                                <td>{{ subfield.label }}</td>
 
-            </tr>
+                            </tr>
 
-            {% endfor %}
-          </div>
-        </div>
-      </div>
-    </header>
-    <footer>
-      <div class='set'>
-        <div>
-          <!-- empty div so that submit button appears on the right side-->
-        </div>
-        <button type="submit" id="submit">Submit</button>
-        <!--<input type="submit" value="Submit" id='submit'>-->
-      </div>
-    </footer>
-    </form>
-  </div>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+        </header>
+        <footer>
+            <div class='set'>
+                <div>
+                    <!-- empty div so that submit button appears on the right side-->
+                </div>
+                <button type="submit" id="submit">Submit</button>
+                <!--<input type="submit" value="Submit" id='submit'>-->
+            </div>
+        </footer>
+        </form>
+    </div>
 </div>
 </body>
 <div class="authors">
     <footer>
-    Authors: Jana Hofman, Salome Wildermuth <br> CSS, HTML templates: https://codepen.io/
-</footer>
+        Authors: Jana Hofman, Salome Wildermuth <br> CSS, HTML templates: https://codepen.io/
+    </footer>
 </div>
 </html>

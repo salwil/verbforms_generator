@@ -111,7 +111,7 @@ body {
 }
 .right-container label,
 .right-container input,
-.right-container .pets-photo {
+.right-container .form-container {
   width: 176px;
 }
 
@@ -119,7 +119,7 @@ body {
   border: none;
   border-radius: 50%;
   height: 38px;
-  margin-right: 10px;
+  margin-right: 0px;
   outline: none;
   width: 38px;
 }
@@ -162,9 +162,20 @@ body {
   border: 1px solid transparent;
   color: #fff;
 }
+
 .right-container #submit:hover {
   background: #171a2b;
 }
+
+.right-container #download {
+  width: 110px;
+  background: #fff;
+  transition: 0.2s all ease-in-out;
+}
+
+.right-container #download:hover {
+  background: #171A2B;
+  color: white;}
 
 .right-container  #add {
   background: #807182;
@@ -197,6 +208,7 @@ body {
   border-radius: 4px;
   display: inline-block;
   padding: 5px;
+  margin: 10px 0;
 }
 
 .radio-container label {
@@ -245,8 +257,6 @@ body {
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-radio-container.inlineLabels ul {list-style:none}
-
 .authors {
   position:absolute;
   width:100%;
@@ -254,7 +264,6 @@ radio-container.inlineLabels ul {list-style:none}
   left:0;
   text-align: right;
   font-size: 12px;
-  background: #fff;
-  /*display: grid;*/
-  padding: 12px 12px;
+  background: #dcdcdc;
+  padding: 7px 10px;
 }
