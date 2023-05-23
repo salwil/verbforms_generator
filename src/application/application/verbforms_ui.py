@@ -151,10 +151,9 @@ def download_file_with_verbs():
     except FileNotFoundError:
         # todo: alert if no verbs have been added to the file doesn't work yet
         flash('You have not added any verb to your file so far.')
-    # checkboxes = TimeFormsCheckbox()
+    checkboxes = TimeFormsCheckbox()
     radio = SentenceFormRadio()
-    return render_template('welcome.html', radio=radio)
-    '''
+    #return render_template('welcome.html', radio=radio)
     return render_template('verbforms_generator.html',
                            next_verb=current_app.config['verb'].verb.infinitive_german,
                            english_translation=current_app.config['verb'].verb.infinitive_english,
@@ -163,7 +162,7 @@ def download_file_with_verbs():
                            is_regular=current_app.config['verb'].verb.is_regular,
                            checkboxes=checkboxes,
                            radio=radio,
-                           generated_sentence=current_app.config['verb'].verb.sample_sentence_german)'''
+                           generated_sentence=current_app.config['verb'].verb.sample_sentence_german)
 
 
 @app.route('/verbforms_generator/goodbye')

@@ -94,9 +94,15 @@
                 <button type="submit" id="submit">Submit</button>
                 </form>
                 <!-- todo: change this to link to the goodbye page and from there the file can be downloaded -->
+                {% with messages = get_flashed_messages(with_categories=true) %}
+                {% if messages %}
+                You haven't added any<br>verbs to your file yet.
+                {% else %}
                 <a href="/verbforms_generator/download" target="blank">
                     <button type="submit" id="download">Download CSV</button>
                 </a>
+                {% endif %}
+                {% endwith %}
                 </a>
             </div>
         </footer>
