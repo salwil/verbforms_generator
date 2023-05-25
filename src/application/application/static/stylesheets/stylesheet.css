@@ -95,6 +95,12 @@ body {
   justify-content: space-between;
   margin: 10px 0;
 }
+
+.set {
+  display: flex;
+  justify-content: space-between;
+}
+
 .right-container input {
   border: 1px solid rgba(0, 0, 0, 0.1);
   border-radius: 4px;
@@ -256,7 +262,7 @@ body {
   border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
-.authors {
+.impressum {
   position:absolute;
   width:100%;
   bottom:0;
