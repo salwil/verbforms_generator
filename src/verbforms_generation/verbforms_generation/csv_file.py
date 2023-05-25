@@ -8,6 +8,7 @@ Computer-assisted language learning: verbforms list generation
 Jana Hofmann, Salome Wildermuth
 Matrikel-Nr: 17-709-361, 10-289-544
 University of Zurich
+
 Institute for Computational Linguistics
 
 - all that is needed for the csv file handling
